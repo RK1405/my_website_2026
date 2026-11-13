@@ -213,15 +213,31 @@
   /* ============ MODAL / LIGHTBOX ============ */
   .overlay { position: fixed; inset: 0; background: rgba(8,20,45,.7); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
   .overlay.open { display: flex; }
-  .modal { max-width: 760px; width: 100%; padding: 36px; position: relative; }
-  .modal .pm-meta { color: var(--accent); font-weight: 600; font-size: .88rem; }
-  .modal h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 6px 0 4px; padding-right: 40px; }
-  .modal .pm-client { color: var(--muted); margin-bottom: 14px; }
-  .modal h4 { font-family: "Plus Jakarta Sans"; font-size: 1rem; margin: 22px 0 8px; color: var(--accent-2); }
-  .modal p { margin-bottom: 12px; }
-  .modal ul { padding-left: 20px; }
-  .modal li { margin-bottom: 6px; }
-  .modal .outcome { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 8px; font-weight: 500; }
+  .article { max-width: 780px; margin: 0 auto; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .92rem; margin-bottom: 22px; }
+  .article .hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
+  .article .hero-ph { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); display: grid; place-items: center; font-size: 4rem; }
+  .article .credit { font-size: .78rem; color: var(--muted); margin-top: 6px; }
+  .article .pm-meta { color: var(--accent); font-weight: 600; font-size: .9rem; margin-top: 26px; }
+  .article h1 { font-size: clamp(1.7rem, 4.5vw, 2.5rem); margin: 8px 0 6px; }
+  .article .pm-client { color: var(--muted); margin-bottom: 14px; font-size: 1.02rem; }
+  .article .lead-result { display: inline-block; font-weight: 600; color: var(--accent-2); background: var(--accent-soft); padding: 8px 14px; border-radius: 8px; margin: 6px 0 4px; }
+  .article h2 { font-size: 1.25rem; margin: 30px 0 10px; color: var(--accent-2); }
+  .article p, .article li { font-size: 1.04rem; }
+  .article p { margin-bottom: 14px; }
+  .article ul { padding-left: 22px; }
+  .article li { margin-bottom: 8px; }
+  .article .outcome { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: 8px; font-weight: 500; }
+  .share { margin-top: 36px; padding: 20px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .share b { margin-right: 6px; }
+  .share a, .share button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; font-size: .88rem; font-weight: 500; cursor: pointer; }
+  .share a:hover, .share button:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+  .post-nav a { padding: 16px 18px; color: var(--text); display: block; }
+  .post-nav a:hover { border-color: var(--accent); text-decoration: none; }
+  .post-nav small { display: block; color: var(--muted); font-size: .8rem; margin-bottom: 4px; }
+  .post-nav .next { text-align: right; grid-column: 2; }
+  @media (max-width: 600px) { .post-nav { grid-template-columns: 1fr; } .post-nav .next { grid-column: 1; } }
   .close { position: absolute; top: 14px; right: 14px; }
   .lightbox { align-items: center; }
   .lightbox figure { max-width: 1000px; width: 100%; text-align: center; color: #fff; }
@@ -234,6 +250,7 @@
   footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: .9rem; background: var(--bg-alt); }
   footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent-2); color: #fff; padding: 12px 22px; border-radius: 10px; transition: transform .3s; z-index: 200; font-size: .92rem; }
+  .toast:not(.show) { visibility: hidden; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
@@ -417,6 +434,9 @@
   </section>
 
   <!-- ===================== GALLERY ===================== -->
+  <!-- Single blog post page (filled in by script, address: #blogs/<slug>) -->
+  <section class="page" id="post"><article class="article" id="article"></article></section>
+
   <section class="page" id="gallery">
     <div class="section-head">
       <div class="eyebrow">Gallery</div>
@@ -463,13 +483,6 @@
   </div>
 </footer>
 
-<!-- Blog post modal -->
-<div class="overlay" id="postOverlay">
-  <article class="card modal" id="postModal">
-    <button class="icon-btn close" data-close aria-label="Close">✕</button>
-    <div id="pmContent"></div>
-  </article>
-</div>
 
 <!-- Gallery lightbox -->
 <div class="overlay lightbox" id="lightbox">
@@ -491,15 +504,17 @@ const CONTACT_EMAIL = "ramakrishnann1405@outlook.com";
 const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
 
 // Blog posts. "category" must be one of CATEGORIES. "start" (YYYY-MM) sets the timeline order.
+// "slug" is the post's link name: rksasikumar.com/#blogs/<slug>. Use lowercase words joined by hyphens, and never change it once shared.
 // Two formats:
 //  1) Project story (used for Career): challenge, actions[], outcome, tech[], result.
 //  Card image: add  image: "images/your-photo.jpg"  to any post. Without it, a blue cover with "icon" is shown.
 //  2) Simple post (good for Life / Travel): just "body" as a list of paragraphs. Example:
-//     { title: "My first trip to Dubai", category: "Travel", period: "Mar 2026", start: "2026-03",
+//     { slug: "first-trip-to-dubai", title: "My first trip to Dubai", category: "Travel", period: "Mar 2026", start: "2026-03",
 //       tag: "Dubai", summary: "One-line teaser shown on the card.",
 //       body: ["First paragraph...", "Second paragraph..."] },
 const BLOGS = [
   {
+    slug: "iot-robotics-altsense",
     title: "Delivering Industrial IoT and robotics products",
     client: "Altsense Technology Solutions, Chennai",
     period: "May 2016 – Dec 2021", start: "2016-05", category: "Career", tag: "IoT & Robotics", image: "images/blog-robotics.jpg", credit: "Unsplash", icon: "🤖",
@@ -517,6 +532,7 @@ const BLOGS = [
     outcome: "These projects grounded me in delivery basics: clear scope, honest status reporting and close client partnership. I've relied on all three since."
   },
   {
+    slug: "ecommerce-erp-modernisation",
     title: "ERP and integration modernisation for a global gaming and e-commerce brand",
     client: "Global gaming and e-commerce brand · NTT DATA",
     period: "Jun 2022 – Present", start: "2022-06", category: "Career", tag: "E-commerce", image: "images/blog-ecommerce.jpg", credit: "Unsplash", icon: "🛒",
@@ -533,6 +549,7 @@ const BLOGS = [
     outcome: "Account margin went from minus 30% to a sustained plus 70%, one of the strongest recoveries in the Business Unit."
   },
   {
+    slug: "automotive-integration-programme",
     title: "Connecting 64+ applications for an automotive services retailer",
     client: "Automotive services retailer · NTT DATA",
     period: "Jul 2022 – Dec 2024", start: "2022-07", category: "Career", tag: "Automotive", image: "images/blog-automotive.jpg", credit: "Unsplash", icon: "🚗",
@@ -548,6 +565,7 @@ const BLOGS = [
     outcome: "One integration layer for the business, with consistent velocity and predictable releases for 2.5 years."
   },
   {
+    slug: "escalated-account-recovery",
     title: "Recovering an escalated account: Business Central, Salesforce and Inform Billing",
     client: "Technology services client · NTT DATA",
     period: "Nov 2023 – Oct 2024", start: "2023-11", category: "Career", tag: "Account Recovery", image: "images/blog-recovery.jpg", credit: "Unsplash", icon: "📈",
@@ -564,6 +582,7 @@ const BLOGS = [
     outcome: "The account was back to healthy, high-satisfaction status within 2 months."
   },
   {
+    slug: "credit-card-platform-banking",
     title: "An end-to-end credit card platform for a leading Indian bank",
     client: "Leading Indian private sector bank · NTT DATA",
     period: "Jan 2024 – Present", start: "2024-01", category: "Career", tag: "Banking", image: "images/blog-banking.jpg", credit: "Unsplash", icon: "💳",
@@ -578,6 +597,7 @@ const BLOGS = [
     outcome: "Customers get one connected credit card journey, with faster card issuance and stronger regulatory compliance."
   },
   {
+    slug: "construction-modernisation",
     title: "Multi-system modernisation for a construction and infrastructure client",
     client: "Construction and infrastructure client · NTT DATA",
     period: "Feb 2024 – Present", start: "2024-02", category: "Career", tag: "Construction", image: "images/blog-construction.jpg", credit: "Unsplash", icon: "🏗️",
@@ -593,6 +613,7 @@ const BLOGS = [
     outcome: "Manual financial reconciliation stopped across active projects. Gross margin rose from 35% to 55% and monthly revenue from USD 35K to 75K."
   },
   {
+    slug: "ai-assisted-agile",
     title: "AI-assisted Agile: embedding ChatGPT in Agile ceremonies",
     client: "Delivery innovation · NTT DATA",
     period: "2025", start: "2025-01", category: "AI & Agents", tag: "Generative AI", image: "images/blog-ai.jpg", credit: "Unsplash", icon: "✨",
@@ -631,11 +652,18 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">
 
 // --- Routing ---
 const PAGES = ["home", "about", "blogs", "gallery", "contact"];
+const SITE_TITLE = document.title;
 function route() {
-  const id = location.hash.slice(1);
-  const page = PAGES.includes(id) ? id : "home";
+  const id = decodeURIComponent(location.hash.slice(1));
+  let page = PAGES.includes(id) ? id : "home";
+  document.title = SITE_TITLE;
+  if (id.startsWith("blogs/")) {
+    const post = BLOGS.find(b => b.slug === id.slice(6));
+    if (post) { renderArticle(post); page = "post"; } else page = "blogs";
+  }
   $$("section.page").forEach(s => s.classList.toggle("active", s.id === page));
-  $$(".nav-links a").forEach(a => a.classList.toggle("active", a.dataset.page === page));
+  const navPage = page === "post" ? "blogs" : page;
+  $$(".nav-links a").forEach(a => a.classList.toggle("active", a.dataset.page === navPage));
   $("#navLinks").classList.remove("open");
   window.scrollTo({ top: 0 });
 }
@@ -673,7 +701,7 @@ function renderPosts() {
       ? `<img src="${esc(b.image)}" alt="" loading="lazy" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`
       : ph;
     return `
-      <article class="card post" data-i="${b.i}" tabindex="0">
+      <a class="card post" href="#blogs/${esc(b.slug)}" style="color:inherit;text-decoration:none">
         <div class="cover">${cover}<span class="cat-badge">${esc(b.category)}</span></div>
         <div class="post-body">
           <div class="meta"><span class="period">${esc(b.period)}</span>${b.tag ? `<span>· ${esc(b.tag)}</span>` : ""}</div>
@@ -682,36 +710,56 @@ function renderPosts() {
           ${b.result ? `<div class="result">📊 ${esc(b.result)}</div>` : ""}
           <span class="more">Read more →</span>
         </div>
-      </article>`;
+      </a>`;
   }).join("");
   if (!list.length) html = `<div class="card empty"><div class="em">✍️</div><h3>${esc(activeTag)} posts are coming soon</h3><p>I'm writing these now. Check back shortly.</p></div>`;
   $("#posts").innerHTML = html;
-  $$("#posts .post").forEach(p => {
-    const open = () => openPost(+p.dataset.i);
-    p.onclick = open; p.onkeydown = e => e.key === "Enter" && open();
-  });
 }
 $("#sortBtn").onclick = () => {
   newestFirst = !newestFirst;
   $("#sortBtn").textContent = newestFirst ? "Sort: Newest first ↓" : "Sort: Oldest first ↑";
   renderPosts();
 };
-function openPost(i) {
-  const b = BLOGS[i];
-  const head = `
-    <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""}</div>
-    <h2>${esc(b.title)}</h2>
-    ${b.client ? `<div class="pm-client">${esc(b.client)}</div>` : ""}
-    ${b.tech ? `<div class="chips">${b.tech.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}`;
+function renderArticle(b) {
+  const ordered = [...BLOGS].sort((x, y) => y.start.localeCompare(x.start));
+  const k = ordered.indexOf(b), newer = ordered[k - 1], older = ordered[k + 1];
+  const url = location.href.split("#")[0] + "#blogs/" + b.slug;
+  const hue = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 }[b.category] ?? 221;
+  const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
+  const cover = b.image
+    ? `<img class="hero-img" src="${esc(b.image)}" alt="" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>${b.credit ? `<div class="credit">Photo: ${esc(b.credit)}</div>` : ""}`
+    : ph;
   const story = b.challenge ? `
-    <h4>The challenge</h4><p>${esc(b.challenge)}</p>
-    <h4>What we did</h4><ul>${b.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
-    <h4>The result</h4><p class="outcome">${esc(b.outcome)}</p>`
-    : `<div style="margin-top:18px">${(b.body || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
-  const img = b.image ? `<img src="${esc(b.image)}" alt="" style="width:100%;border-radius:10px;margin:0 0 18px" onerror="this.remove()">${b.credit ? `<div style="font-size:.78rem;color:var(--muted);margin:-12px 0 16px">Photo: ${esc(b.credit)}</div>` : ""}` : "";
-  $("#pmContent").innerHTML = img + head + story;
-  $("#postOverlay").classList.add("open");
-  $("#postOverlay").scrollTop = 0;
+    <h2>The challenge</h2><p>${esc(b.challenge)}</p>
+    <h2>What we did</h2><ul>${b.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+    <h2>The result</h2><p class="outcome">${esc(b.outcome)}</p>`
+    : `<div style="margin-top:22px">${(b.body || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+  const text = encodeURIComponent(b.title), link = encodeURIComponent(url);
+  $("#article").innerHTML = `
+    <a class="back-link" href="#blogs">← All blogs</a>
+    ${cover}
+    <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""}</div>
+    <h1>${esc(b.title)}</h1>
+    ${b.client ? `<div class="pm-client">${esc(b.client)}</div>` : ""}
+    ${b.result ? `<div class="lead-result">📊 ${esc(b.result)}</div>` : ""}
+    ${b.tech ? `<div class="chips" style="margin-top:12px">${b.tech.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}
+    ${story}
+    <div class="card share">
+      <b>Share this post</b>
+      <button type="button" id="copyLink">🔗 Copy link</button>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=${link}" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a href="https://wa.me/?text=${text}%20${link}" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a href="mailto:?subject=${text}&body=${text}%0A${link}">✉️ Email</a>
+    </div>
+    <nav class="post-nav">
+      ${newer ? `<a class="card" href="#blogs/${esc(newer.slug)}"><small>← Newer post</small>${esc(newer.title)}</a>` : ""}
+      ${older ? `<a class="card next" href="#blogs/${esc(older.slug)}"><small>Older post →</small>${esc(older.title)}</a>` : ""}
+    </nav>`;
+  $("#copyLink").onclick = async () => {
+    try { await navigator.clipboard.writeText(url); toast("Link copied"); }
+    catch { prompt("Copy this link:", url); }
+  };
+  document.title = b.title + " · " + SITE_TITLE.split(" · ")[0];
 }
 
 // --- Gallery ---
