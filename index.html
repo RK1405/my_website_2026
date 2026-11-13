@@ -8,6 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+<meta name="theme-color" content="#0b2e6f" />
 <style>
   /* ============ THEME TOKENS (blue & white) ============ */
   :root {
@@ -55,7 +59,9 @@
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 12px; }
   .logo { display: flex; align-items: center; gap: 10px; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; color: var(--text); font-size: 1.05rem; }
   .logo:hover { text-decoration: none; }
-  .logo .mark { width: 36px; height: 36px; border-radius: 9px; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: .9rem; }
+  .logo .mark { width: 38px; height: 38px; display: grid; place-items: center; flex-shrink: 0; }
+  .logo .mark svg { width: 100%; height: 100%; }
+  .logo .mark svg text { font-family: "Plus Jakarta Sans", Arial, sans-serif; }
   .nav-links { display: flex; gap: 2px; list-style: none; }
   .nav-links a { display: block; padding: 8px 14px; border-radius: 8px; color: var(--muted); font-weight: 500; font-size: .95rem; }
   .nav-links a:hover { color: var(--text); text-decoration: none; background: var(--surface-2); }
@@ -280,7 +286,7 @@
 <!-- ===================== NAVIGATION ===================== -->
 <header class="nav">
   <div class="container nav-inner">
-    <a href="#home" class="logo"><span class="mark">RS</span><span class="full">Ramakrishnann Sasikumar</span></a>
+    <a href="#home" class="logo"><span class="mark"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4l40 23v46L50 96 10 73V27z" fill="#0b2e6f"/><path d="M50 13l32 18.5v37L50 87 18 68.5v-37z" fill="none" stroke="#60a5fa" stroke-width="3"/><text x="50" y="62" text-anchor="middle" font-size="31" font-weight="800" fill="#fff">RS</text></svg></span><span class="full">Ramakrishnann Sasikumar</span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home" data-page="home">Home</a></li>
       <li><a href="#about" data-page="about">About Me</a></li>

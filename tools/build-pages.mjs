@@ -17,7 +17,7 @@ import vm from "node:vm";
 const SITE_URL = "https://rksasikumar.com";
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const OUT = path.resolve(ROOT, process.argv[2] || "_site");
-const COPY = ["index.html", "resume.pdf", "CNAME", "images"];
+const COPY = ["index.html", "resume.pdf", "CNAME", "favicon.ico", "images"];
 
 const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 
@@ -107,6 +107,10 @@ function postPage(b, newer, older) {
 <meta name="twitter:image" content="${image}" />
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 ${fonts}
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+<meta name="theme-color" content="#0b2e6f" />
 ${style}
 </head>
 <body>
