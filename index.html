@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ramakrishnann Sasikumar · Program Manager</title>
+<meta name="description" content="Ramakrishnann Sasikumar — PMP & CSM certified Program Manager in Integration and Cloud Delivery. Portfolio, career stories and contact." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============ THEME TOKENS (blue & white) ============ */
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f4f7fc;
+    --surface: #ffffff;
+    --surface-2: #eef3fb;
+    --text: #0f1f3a;
+    --muted: #5a6b85;
+    --border: #dde5f1;
+    --accent: #1d4ed8;
+    --accent-2: #0b2e6f;
+    --accent-soft: #e6eefc;
+    --on-accent: #ffffff;
+    --shadow: 0 1px 2px rgba(15,31,58,.05), 0 10px 28px rgba(15,31,58,.07);
+    --radius: 14px;
+    --max: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0a1426; --bg-alt: #0d1a31; --surface: #11203b; --surface-2: #16294a; --text: #e8eefa;
+      --muted: #9aabc7; --border: #223a63; --accent: #60a5fa; --accent-2: #93c5fd; --accent-soft: #15315e;
+      --on-accent: #0a1426; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a1426; --bg-alt: #0d1a31; --surface: #11203b; --surface-2: #16294a; --text: #e8eefa;
+    --muted: #9aabc7; --border: #223a63; --accent: #60a5fa; --accent-2: #93c5fd; --accent-soft: #15315e;
+    --on-accent: #0a1426; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
+  }
+
+  /* ============ BASE ============ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Inter", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: "Plus Jakarta Sans", "Inter", sans-serif; line-height: 1.2; font-weight: 700; letter-spacing: -.01em; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .container { padding: 0 32px; } }
+
+  /* ============ NAV ============ */
+  header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; color: var(--text); font-size: 1.05rem; }
+  .logo:hover { text-decoration: none; }
+  .logo .mark { width: 36px; height: 36px; border-radius: 9px; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: .9rem; }
+  .nav-links { display: flex; gap: 2px; list-style: none; }
+  .nav-links a { display: block; padding: 8px 14px; border-radius: 8px; color: var(--muted); font-weight: 500; font-size: .95rem; }
+  .nav-links a:hover { color: var(--text); text-decoration: none; background: var(--surface-2); }
+  .nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+  .nav-actions { display: flex; align-items: center; gap: 6px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; display: grid; place-items: center; font-size: 1.05rem; }
+  .menu-btn { display: none; }
+  @media (max-width: 800px) {
+    .menu-btn { display: grid; }
+    .logo .full { display: none; }
+    .nav-links { position: absolute; top: 66px; left: 0; right: 0; flex-direction: column; background: var(--bg); border-bottom: 1px solid var(--border); padding: 8px 16px 16px; display: none; }
+    .nav-links.open { display: flex; }
+  }
+
+  /* ============ PAGES ============ */
+  main section.page { display: none; padding: 56px 0 80px; animation: fade .4s ease; }
+  main section.page.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+  .page-title { font-size: clamp(2rem, 5vw, 2.9rem); margin-bottom: 12px; }
+  .lead { color: var(--muted); font-size: 1.08rem; max-width: 680px; }
+  .section-head { margin-bottom: 36px; }
+  h2.sub { font-size: 1.5rem; margin: 52px 0 20px; display: flex; align-items: center; gap: 12px; }
+  h2.sub::before { content: ""; width: 5px; height: 24px; border-radius: 3px; background: var(--accent); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer; font-size: .95rem; font-family: inherit; }
+  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+  .btn.ghost { background: transparent; color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 4px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-2); font-size: .82rem; font-weight: 500; }
+
+  /* ============ HOME ============ */
+  .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; min-height: 56vh; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin-bottom: 14px; }
+  .hero h1 span { color: var(--accent); }
+  .hero .role { font-weight: 600; color: var(--accent-2); font-size: 1.1rem; margin-bottom: 16px; }
+  .hero p.intro { color: var(--muted); font-size: 1.08rem; margin-bottom: 28px; max-width: 560px; }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; font-size: .84rem; color: var(--muted); padding: 6px 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+  .badge.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #16a34a; }
+  .profile { border-radius: 24px; padding: 24px; background: linear-gradient(150deg, #1d4ed8, #0b2e6f); color: #fff; box-shadow: var(--shadow); }
+  .profile .photo { height: 300px; width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 18px; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.35); display: grid; place-items: center; }
+  .profile .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+  .profile .photo span { display: none; font-family: "Plus Jakarta Sans"; font-weight: 800; font-size: 3rem; }
+  .profile .photo.nophoto span { display: block; }
+  .profile .avatar { width: 112px; height: 112px; border-radius: 50%; background: rgba(255,255,255,.15); border: 3px solid rgba(255,255,255,.5); display: grid; place-items: center; font-family: "Plus Jakarta Sans"; font-weight: 800; font-size: 2.4rem; overflow: hidden; margin-bottom: 18px; }
+  .profile .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .profile h3 { font-size: 1.2rem; margin-bottom: 4px; }
+  .profile .loc { opacity: .85; font-size: .92rem; margin-bottom: 18px; }
+  .profile ul { list-style: none; display: grid; gap: 10px; font-size: .92rem; }
+  .profile li { display: flex; gap: 10px; align-items: flex-start; }
+  .profile li::before { content: "✓"; font-weight: 700; color: #93c5fd; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 56px; }
+  .stat { padding: 22px; }
+  .stat b { display: block; font-family: "Plus Jakarta Sans"; font-weight: 800; font-size: clamp(1.4rem, 2.6vw, 2rem); color: var(--accent); }
+  .stat span { color: var(--muted); font-size: .9rem; }
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .highlight { padding: 26px; }
+  .highlight .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft); display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 14px; }
+  .highlight h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .highlight p { color: var(--muted); font-size: .95rem; }
+  .award-banner { margin-top: 40px; padding: 26px 28px; display: flex; gap: 20px; align-items: center; background: var(--accent-soft); border: 1px solid var(--border); border-radius: var(--radius); }
+  .award-banner .trophy { font-size: 2.4rem; }
+  .award-banner h3 { font-size: 1.15rem; color: var(--accent-2); }
+  .award-banner p { color: var(--muted); font-size: .95rem; }
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .highlights { grid-template-columns: 1fr; }
+    .award-banner { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ============ ABOUT ============ */
+  .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: start; }
+  .story p { margin-bottom: 16px; }
+  .facts { padding: 8px 22px; }
+  .facts li { list-style: none; display: flex; justify-content: space-between; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: .93rem; }
+  .facts li:last-child { border: 0; }
+  .facts li span:first-child { color: var(--muted); flex-shrink: 0; }
+  .facts li span:last-child { text-align: right; font-weight: 500; }
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 22px; padding: 22px 24px; }
+  .tl-item::before { content: ""; position: absolute; left: -30px; top: 28px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 4px solid var(--accent); }
+  .tl-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; }
+  .tl-item .when { font-size: .85rem; color: var(--accent); font-weight: 600; }
+  .tl-item h3 { font-size: 1.15rem; }
+  .tl-item .where { color: var(--muted); font-size: .95rem; margin-bottom: 10px; }
+  .tl-item ul { padding-left: 18px; font-size: .94rem; }
+  .tl-item li { margin-bottom: 4px; }
+  .tl-item li b { color: var(--accent-2); }
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .skill-group { padding: 22px; }
+  .skill-group h3 { font-size: 1rem; margin-bottom: 12px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .list-card { padding: 22px 24px; }
+  .list-card h3 { font-size: 1.05rem; margin-bottom: 14px; }
+  .list-card li { list-style: none; display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: .93rem; }
+  .list-card li:last-child { border: 0; }
+  .list-card li .ico { flex-shrink: 0; }
+  .list-card small { display: block; color: var(--muted); }
+  @media (max-width: 800px) { .about-grid, .two-col { grid-template-columns: 1fr; } }
+
+  /* ============ CAREER BLOGS ============ */
+  .blog-tools { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font: inherit; font-size: .88rem; }
+  .filter.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  .sort-btn { font: inherit; font-size: .88rem; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .post { display: flex; flex-direction: column; overflow: hidden; cursor: pointer; transition: transform .2s, box-shadow .2s, border-color .2s; }
+  .post:hover, .post:focus-visible { transform: translateY(-4px); border-color: var(--accent); outline: none; box-shadow: 0 14px 34px rgba(15,31,58,.14); }
+  .post .cover { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--surface-2); }
+  .post .cover img, .post .cover-ph { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .post:hover .cover img, .post:hover .cover-ph { transform: scale(1.05); }
+  .cover-ph { display: grid; place-items: center; font-size: 3rem; }
+  .cat-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,.95); color: #0b2e6f; font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; letter-spacing: .02em; }
+  .post-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+  .post .meta { font-size: .82rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .post .meta .period { color: var(--accent); font-weight: 600; }
+  .post h3 { font-size: 1.12rem; margin-bottom: 8px; }
+  .post p { font-size: .93rem; color: var(--muted); margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .post .result { align-self: flex-start; font-weight: 600; font-size: .82rem; color: var(--accent-2); background: var(--accent-soft); padding: 5px 10px; border-radius: 8px; margin-bottom: 14px; }
+  .empty { grid-column: 1 / -1; }
+  .post .result { margin-top: auto; }
+  .post p + .more { margin-top: auto; }
+  .post .more { font-weight: 600; font-size: .9rem; color: var(--accent); }
+
+  /* ============ GALLERY ============ */
+  .gallery { columns: 3 260px; column-gap: 16px; }
+  .g-item { break-inside: avoid; margin-bottom: 16px; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; position: relative; border: 1px solid var(--border); }
+  .g-item img, .g-item .ph { width: 100%; transition: transform .4s; }
+  .g-item:hover img, .g-item:hover .ph { transform: scale(1.04); }
+  .g-item figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 14px 12px; color: #fff; font-size: .9rem; background: linear-gradient(transparent, rgba(8,20,45,.75)); }
+  .ph { display: grid; place-items: center; color: rgba(255,255,255,.92); font-size: 2.4rem; }
+
+  /* ============ CONTACT ============ */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 32px; }
+  .contact-list { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; color: var(--text); word-break: break-word; }
+  .contact-item:hover { text-decoration: none; border-color: var(--accent); }
+  .contact-item .ic { width: 44px; height: 44px; border-radius: 10px; background: var(--accent-soft); display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; }
+  .contact-item small { display: block; color: var(--muted); font-size: .8rem; }
+  form.card { padding: 28px; display: grid; gap: 16px; }
+  label { font-size: .88rem; font-weight: 600; display: block; margin-bottom: 6px; }
+  input, textarea, select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-alt); color: var(--text); font: inherit; font-size: .95rem; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  textarea { min-height: 140px; resize: vertical; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-note { font-size: .86rem; color: var(--muted); }
+  @media (max-width: 800px) { .contact-grid, .row2 { grid-template-columns: 1fr; } }
+
+  /* ============ MODAL / LIGHTBOX ============ */
+  .overlay { position: fixed; inset: 0; background: rgba(8,20,45,.7); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .overlay.open { display: flex; }
+  .modal { max-width: 760px; width: 100%; padding: 36px; position: relative; }
+  .modal .pm-meta { color: var(--accent); font-weight: 600; font-size: .88rem; }
+  .modal h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin: 6px 0 4px; padding-right: 40px; }
+  .modal .pm-client { color: var(--muted); margin-bottom: 14px; }
+  .modal h4 { font-family: "Plus Jakarta Sans"; font-size: 1rem; margin: 22px 0 8px; color: var(--accent-2); }
+  .modal p { margin-bottom: 12px; }
+  .modal ul { padding-left: 20px; }
+  .modal li { margin-bottom: 6px; }
+  .modal .outcome { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 14px 18px; border-radius: 8px; font-weight: 500; }
+  .close { position: absolute; top: 14px; right: 14px; }
+  .lightbox { align-items: center; }
+  .lightbox figure { max-width: 1000px; width: 100%; text-align: center; color: #fff; }
+  .lightbox img { max-height: 78vh; margin: 0 auto; border-radius: 12px; width: auto; }
+  .lightbox .ph { width: min(80vw, 700px); aspect-ratio: 4/3; margin: 0 auto; border-radius: 12px; }
+  .lightbox figcaption { margin-top: 12px; }
+  .lb-nav { position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.15); color: #fff; border: 0; }
+  .lb-prev { left: 12px; } .lb-next { right: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: .9rem; background: var(--bg-alt); }
+  footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent-2); color: #fff; padding: 12px 22px; border-radius: 10px; transition: transform .3s; z-index: 200; font-size: .92rem; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVIGATION ===================== -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#home" class="logo"><span class="mark">RS</span><span class="full">Ramakrishnann Sasikumar</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" data-page="home">Home</a></li>
+      <li><a href="#about" data-page="about">About Me</a></li>
+      <li><a href="#blogs" data-page="blogs">Blogs</a></li>
+      <li><a href="#gallery" data-page="gallery">Gallery</a></li>
+      <li><a href="#contact" data-page="contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">🌓</button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===================== HOME ===================== -->
+  <section class="page" id="home">
+    <div class="hero">
+      <div>
+        <div class="badges">
+          <span class="badge live">Open to UAE relocation</span>
+          <span class="badge">PMP · CSM</span>
+        </div>
+        <h1>Hi, I'm <span>Ramakrishnann Sasikumar</span></h1>
+        <div class="role">Program Manager · Integration and Cloud Delivery</div>
+        <p class="intro">I've spent 10+ years delivering technology projects and programmes. I currently direct a USD 20M portfolio of MuleSoft, Salesforce and ERP integration programmes at NTT DATA, and I'm known for turning troubled accounts around.</p>
+        <div class="hero-cta">
+          <a href="#blogs" class="btn">Read my blogs →</a>
+          <a href="resume.pdf" class="btn ghost" download>Download résumé</a>
+        </div>
+      </div>
+      <aside class="profile">
+        <div class="photo"><img src="images/me.jpg" alt="Ramakrishnann Sasikumar" onerror="this.parentNode.classList.add('nophoto');this.remove()"><span>RS</span></div>
+        <h3>Delivery Lead Consultant, NTT DATA</h3>
+        <div class="loc">📍 Chennai, India</div>
+        <ul>
+          <li>USD 20M portfolio, 20+ projects</li>
+          <li>40%+ gross margin across 7 industries</li>
+          <li>50+ member onshore/offshore team</li>
+          <li>US & UK clients</li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="stats">
+      <div class="card stat"><b>10+</b><span>Years in delivery</span></div>
+      <div class="card stat"><b>$20M</b><span>Portfolio managed</span></div>
+      <div class="card stat"><b>64+</b><span>Integrations as reusable APIs</span></div>
+      <div class="card stat"><b>+70%</b><span>Flagship account margin, up from −30%</span></div>
+    </div>
+
+    <h2 class="sub">What I do</h2>
+    <div class="highlights">
+      <div class="card highlight"><div class="ic">📈</div><h3>Programme & Portfolio Delivery</h3><p>P&L ownership, budgeting and forecasting, earned value tracking, and monthly steering committees with C-level stakeholders.</p></div>
+      <div class="card highlight"><div class="ic">🔗</div><h3>Integration & Cloud</h3><p>MuleSoft API-led connectivity across Salesforce, Oracle Cloud, Microsoft Dynamics and Business Central, on AWS and Azure.</p></div>
+      <div class="card highlight"><div class="ic">🤖</div><h3>AI-Assisted Delivery</h3><p>Built an AI-assisted Agile method that cut person-hours per sprint by around 45%, and drive Generative AI adoption across delivery teams.</p></div>
+    </div>
+
+    <div class="award-banner">
+      <div class="trophy">🏆</div>
+      <div>
+        <h3>India Delivery Excellence Award, NTT DATA (FY25)</h3>
+        <p>Given to 65 of around 40,000 employees. Also named Best People Manager (Q4 2025) and winner of Best Technical Paper (2025).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="page" id="about">
+    <div class="section-head">
+      <div class="eyebrow">About me</div>
+      <h1 class="page-title">More than a résumé</h1>
+      <p class="lead">An electrical engineer who started out building robots and IoT products, and now leads enterprise integration programmes for global clients.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="story">
+        <p>I'm a PMP and CSM certified delivery leader with more than 10 years of experience managing technology projects and programmes. At NTT DATA, I direct a USD 20M portfolio of 20+ MuleSoft, Salesforce and ERP integration projects for clients in the US and UK. The portfolio spans 7 industries, including banking, e-commerce, construction, telecommunications and automotive services.</p>
+        <p>My career began at Altsense Technology Solutions, where I managed embedded systems and robotics projects. That work ranged from building management systems to a food-serving robot. Getting hardware, firmware and software teams to deliver together taught me the fundamentals: clear scope, honest status reporting and steady client communication.</p>
+        <p>I enjoy recovering accounts that are in trouble. My flagship global e-commerce account went from minus 30% to a sustained plus 70% margin, one of the strongest recoveries in our Business Unit. I've also brought escalated accounts back to healthy, high-satisfaction status within two months.</p>
+        <p>Lately I've been focused on AI in delivery. I wrote "AI-Adopted Agile Project Management: The Time Saver", which won NTT DATA's Best Technical Paper award, and I help delivery teams adopt Generative AI tools. I'm open to relocating to the UAE for my next role.</p>
+      </div>
+      <ul class="card facts">
+        <li><span>Location</span><span>Chennai, India</span></li>
+        <li><span>Relocation</span><span>Open to UAE</span></li>
+        <li><span>Current role</span><span>Delivery Lead Consultant, NTT DATA</span></li>
+        <li><span>Experience</span><span>10+ years</span></li>
+        <li><span>Education</span><span>M.E. Solar Energy, Anna University</span></li>
+        <li><span>Languages</span><span>English, Hindi, Tamil</span></li>
+        <li><span>Certified</span><span>PMP · CSM · Salesforce · MuleSoft</span></li>
+      </ul>
+    </div>
+
+    <h2 class="sub">Experience</h2>
+    <div class="timeline">
+      <div class="card tl-item">
+        <div class="tl-top"><h3>Delivery Lead Consultant</h3><span class="when">May 2022 — Present</span></div>
+        <div class="where">NTT DATA (formerly Apisero) · Chennai, India</div>
+        <ul>
+          <li>Directs a <b>USD 20M portfolio of 20+ projects</b> across MuleSoft, Salesforce and ERP programmes for US and UK clients, growing <b>5% quarter on quarter at 40%+ gross margin</b>.</li>
+          <li>Owns P&L, budgeting, cost control and forecasting, including SOWs, fixed-price and T&M contracts, change request pricing and milestone billing.</li>
+          <li>Plans each programme from charter, WBS and critical path schedule in MS Project, and tracks delivery through <b>earned value (CPI/SPI)</b> and KPI dashboards.</li>
+          <li>Leads monthly steering committee reviews with client C-level stakeholders and NTT DATA leadership.</li>
+          <li>Led a flagship e-commerce account from <b>−30% to a sustained +70% margin</b>.</li>
+          <li>Lifted a construction programme's gross margin from <b>35% to 55%</b> and monthly revenue from <b>USD 35K to 75K</b>.</li>
+          <li>Manages end-to-end SDLC on AWS and Azure across Agile, SAFe, Kanban and hybrid models, with <b>64+ integrations</b> built as reusable APIs.</li>
+          <li>Leads a <b>50+ member</b> onshore/offshore team and mentors <b>15+</b> project managers and Scrum Masters.</li>
+          <li>Leads ISO 27001 and ISO 9001 audit readiness, with <b>99% on-time audit closure</b>.</li>
+          <li>Supports pre-sales for MuleSoft and Salesforce opportunities, and grows existing accounts through account mining and value-added services.</li>
+          <li>Drives Generative AI adoption, raising productivity by <b>up to 15x</b> on targeted workflows.</li>
+        </ul>
+      </div>
+      <div class="card tl-item">
+        <div class="tl-top"><h3>Project Manager</h3><span class="when">May 2016 — Dec 2021</span></div>
+        <div class="where">Altsense Technology Solutions · Chennai, India</div>
+        <ul>
+          <li>Managed end-to-end delivery of <b>10+ embedded systems and robotics projects</b>, from requirements to client handover.</li>
+          <li>Planned schedules, budgets and resources for a team of around <b>50</b>.</li>
+          <li>Delivered Industrial IoT products: a building management system, automatic gates, Wi-Fi controlled lighting and a food-serving robot.</li>
+          <li>Acted as primary client contact, running status reviews, managing change requests and securing sign-off at each milestone.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="sub">Core skills</h2>
+    <div class="skills">
+      <div class="card skill-group"><h3>Delivery & Governance</h3><div class="chips"><span class="chip">Programme & Portfolio Mgmt</span><span class="chip">P&L & Forecasting</span><span class="chip">RAID & Change Control</span><span class="chip">ISO 27001 / 9001</span><span class="chip">Stakeholder & Vendor Mgmt</span></div></div>
+      <div class="card skill-group"><h3>Integration & Platforms</h3><div class="chips"><span class="chip">MuleSoft</span><span class="chip">API-led Connectivity</span><span class="chip">Salesforce</span><span class="chip">Oracle Cloud</span><span class="chip">MS Dynamics / Business Central</span><span class="chip">AWS</span><span class="chip">Azure</span></div></div>
+      <div class="card skill-group"><h3>Methodologies</h3><div class="chips"><span class="chip">Agile</span><span class="chip">Scrum</span><span class="chip">SAFe</span><span class="chip">Kanban</span><span class="chip">Hybrid & Predictive</span><span class="chip">Earned Value Mgmt</span></div></div>
+      <div class="card skill-group"><h3>Tools</h3><div class="chips"><span class="chip">JIRA</span><span class="chip">Confluence</span><span class="chip">MS Project</span><span class="chip">Smartsheet</span><span class="chip">Power BI</span></div></div>
+      <div class="card skill-group"><h3>AI & Programming</h3><div class="chips"><span class="chip">AI / ML</span><span class="chip">Generative AI</span><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">C++</span></div></div>
+    </div>
+
+    <h2 class="sub">Certifications & awards</h2>
+    <div class="two-col">
+      <ul class="card list-card">
+        <h3>Certifications</h3>
+        <li><span class="ico">🎓</span><div>Project Management Professional (PMP)<small>PMI · Above target in all 3 domains</small></div></li>
+        <li><span class="ico">🎓</span><div>Certified ScrumMaster (CSM)<small>Scrum Alliance</small></div></li>
+        <li><span class="ico">🎓</span><div>Salesforce Certified Platform Administrator<small>Salesforce</small></div></li>
+        <li><span class="ico">🎓</span><div>Salesforce Certified MuleSoft Integration Associate<small>Salesforce</small></div></li>
+      </ul>
+      <ul class="card list-card">
+        <h3>Awards & recognition</h3>
+        <li><span class="ico">🏆</span><div>India Delivery Excellence Award (Delivery Execution)<small>NTT DATA · FY25 · 65 of ~40,000 employees</small></div></li>
+        <li><span class="ico">🏆</span><div>Best People Manager<small>NTT DATA · Q4 2025</small></div></li>
+        <li><span class="ico">🏆</span><div>Best Technical Paper: "AI-Adopted Agile Project Management: The Time Saver"<small>NTT DATA · 2025 · Management Excellence Program</small></div></li>
+        <li><span class="ico">🏆</span><div>Raving Review, Apisero ACE, Kokua (Selflessness) & Vendustrious Awards<small>Apisero (now NTT DATA)</small></div></li>
+      </ul>
+    </div>
+
+    <h2 class="sub">Education</h2>
+    <div class="two-col">
+      <div class="card list-card"><h3>M.E., Solar Energy</h3><p style="color:var(--muted)">Anna University · 2019</p></div>
+      <div class="card list-card"><h3>B.E., Electrical and Electronics Engineering</h3><p style="color:var(--muted)">Anna University · 2016</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== CAREER BLOGS ===================== -->
+  <section class="page" id="blogs">
+    <div class="section-head">
+      <div class="eyebrow">Blogs</div>
+      <h1 class="page-title">Stories & notes</h1>
+      <p class="lead">Career stories from the programmes I've delivered, plus writing on AI and agents, life and travel. Click any post to read it in full.</p>
+    </div>
+    <div class="blog-tools">
+      <div class="filters" id="filters"></div>
+      <button class="sort-btn" id="sortBtn">Sort: Newest first ↓</button>
+    </div>
+    <div class="post-grid" id="posts"></div>
+  </section>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section class="page" id="gallery">
+    <div class="section-head">
+      <div class="eyebrow">Gallery</div>
+      <h1 class="page-title">Moments</h1>
+      <p class="lead">Award ceremonies, team milestones and events along the way. Click any photo to enlarge it.</p>
+    </div>
+    <div class="gallery" id="galleryGrid"></div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="page" id="contact">
+    <div class="section-head">
+      <div class="eyebrow">Contact</div>
+      <h1 class="page-title">Let's talk</h1>
+      <p class="lead">Interested in programme leadership, integration delivery or a role in the UAE? I'd be glad to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-list">
+        <a class="card contact-item" href="mailto:ramakrishnann1405@outlook.com"><div class="ic">✉️</div><div><small>Email</small>ramakrishnann1405@outlook.com</div></a>
+        <a class="card contact-item" href="https://www.linkedin.com/in/ramakrishnann-sasikumar-1301ab240" target="_blank" rel="noopener"><div class="ic">💼</div><div><small>LinkedIn</small>ramakrishnann-sasikumar</div></a>
+        <a class="card contact-item" href="tel:+919600474973"><div class="ic">📞</div><div><small>Phone</small>+91 96004 74973</div></a>
+        <div class="card contact-item"><div class="ic">📍</div><div><small>Location</small>Chennai, India · open to UAE relocation</div></div>
+      </div>
+      <form class="card" id="contactForm">
+        <div class="row2">
+          <div><label for="name">Name</label><input id="name" required placeholder="Your name" /></div>
+          <div><label for="email">Email</label><input id="email" type="email" required placeholder="you@company.com" /></div>
+        </div>
+        <div><label for="reason">Reason</label>
+          <select id="reason"><option>Job opportunity</option><option>Consulting / project delivery</option><option>Speaking or collaboration</option><option>Just saying hi</option></select>
+        </div>
+        <div><label for="msg">Message</label><textarea id="msg" required placeholder="Tell me a bit about it…"></textarea></div>
+        <div><button class="btn" type="submit">Send message →</button></div>
+        <p class="form-note">This opens your email app with the message filled in.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <span>© <span id="year"></span> Ramakrishnann Sasikumar</span>
+    <span><a href="resume.pdf" download>Résumé (PDF)</a> · <a href="#home">Back to top ↑</a></span>
+  </div>
+</footer>
+
+<!-- Blog post modal -->
+<div class="overlay" id="postOverlay">
+  <article class="card modal" id="postModal">
+    <button class="icon-btn close" data-close aria-label="Close">✕</button>
+    <div id="pmContent"></div>
+  </article>
+</div>
+
+<!-- Gallery lightbox -->
+<div class="overlay lightbox" id="lightbox">
+  <button class="icon-btn close" data-close aria-label="Close" style="position:fixed">✕</button>
+  <button class="icon-btn lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <figure id="lbFigure"></figure>
+  <button class="icon-btn lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==========================================================
+   EDIT YOUR CONTENT HERE
+   ========================================================== */
+const CONTACT_EMAIL = "ramakrishnann1405@outlook.com";
+
+// Blog categories, shown as filter buttons in this order.
+const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
+
+// Blog posts. "category" must be one of CATEGORIES. "start" (YYYY-MM) sets the timeline order.
+// Two formats:
+//  1) Project story (used for Career): challenge, actions[], outcome, tech[], result.
+//  Card image: add  image: "images/your-photo.jpg"  to any post. Without it, a blue cover with "icon" is shown.
+//  2) Simple post (good for Life / Travel): just "body" as a list of paragraphs. Example:
+//     { title: "My first trip to Dubai", category: "Travel", period: "Mar 2026", start: "2026-03",
+//       tag: "Dubai", summary: "One-line teaser shown on the card.",
+//       body: ["First paragraph...", "Second paragraph..."] },
+const BLOGS = [
+  {
+    title: "Delivering Industrial IoT and robotics products",
+    client: "Altsense Technology Solutions, Chennai",
+    period: "May 2016 – Dec 2021", start: "2016-05", category: "Career", tag: "IoT & Robotics", image: "images/blog-robotics.jpg", credit: "Unsplash", icon: "🤖",
+    tech: ["Embedded Systems", "Industrial IoT", "Java", "C++"],
+    summary: "Where it started: more than 10 embedded systems and robotics projects, taken from requirements to client handover.",
+    result: "10+ projects delivered with a team of around 50",
+    challenge: "Hardware products need hardware, firmware and software to come together on time. Each project had its own client, budget and milestones, and every delivery had to be signed off.",
+    actions: [
+      "Managed end-to-end delivery of more than 10 embedded systems and robotics projects, from requirements to client handover.",
+      "Planned schedules, budgets and resources for a team of around 50, tracking scope, risks and milestones.",
+      "Delivered Industrial IoT products: a building management system, automatic gates, Wi-Fi controlled lighting and a food-serving robot.",
+      "Coordinated hardware integration with Java and C++ development.",
+      "Acted as primary client contact, running status reviews, managing change requests and securing sign-off at each milestone."
+    ],
+    outcome: "These projects grounded me in delivery basics: clear scope, honest status reporting and close client partnership. I've relied on all three since."
+  },
+  {
+    title: "ERP and integration modernisation for a global gaming and e-commerce brand",
+    client: "Global gaming and e-commerce brand · NTT DATA",
+    period: "Jun 2022 – Present", start: "2022-06", category: "Career", tag: "E-commerce", image: "images/blog-ecommerce.jpg", credit: "Unsplash", icon: "🛒",
+    tech: ["MuleSoft", "Oracle Cloud", "Oracle ERP", "Salesforce CRM", "Microsoft AX"],
+    summary: "Moving a fast-growing e-commerce business off a legacy Microsoft AX estate onto Oracle Cloud, with MuleSoft as the integration backbone.",
+    result: "Account margin: −30% → sustained +70%",
+    challenge: "The client's core processes ran on a legacy Microsoft AX estate that could not keep up with its e-commerce growth. The account was also losing money, at minus 30% margin.",
+    actions: [
+      "Moved core processes off Microsoft AX and rebuilt the integrations on an Oracle Cloud framework, with MuleSoft as the integration backbone.",
+      "Built AX connectivity to a global IT distributor for distribution operations, plus integrations for 2 money management tools.",
+      "Designed a library of reusable integration components and a live Salesforce-to-Oracle data bridge, so the move to Oracle ERP and Salesforce CRM caused little disruption.",
+      "Planned and tracked delivery with earned value management and led monthly steering committees with client leadership."
+    ],
+    outcome: "Account margin went from minus 30% to a sustained plus 70%, one of the strongest recoveries in the Business Unit."
+  },
+  {
+    title: "Connecting 64+ applications for an automotive services retailer",
+    client: "Automotive services retailer · NTT DATA",
+    period: "Jul 2022 – Dec 2024", start: "2022-07", category: "Career", tag: "Automotive", image: "images/blog-automotive.jpg", credit: "Unsplash", icon: "🚗",
+    tech: ["MuleSoft", "Kanban", "Managed Services"],
+    summary: "A managed services programme that brought sales, HR and vehicle service systems together on one MuleSoft integration layer.",
+    result: "64+ applications on one integration layer",
+    challenge: "The retailer's sales, HR and vehicle service systems were separate. It needed them connected, and needed a steady flow of integration work under a managed services model.",
+    actions: [
+      "Connected 64+ applications across sales, HR and vehicle service systems into one integration layer on MuleSoft.",
+      "Ran delivery on Kanban with SLA-driven throughput.",
+      "Built integrations as reusable APIs so later work could be delivered faster."
+    ],
+    outcome: "One integration layer for the business, with consistent velocity and predictable releases for 2.5 years."
+  },
+  {
+    title: "Recovering an escalated account: Business Central, Salesforce and Inform Billing",
+    client: "Technology services client · NTT DATA",
+    period: "Nov 2023 – Oct 2024", start: "2023-11", category: "Career", tag: "Account Recovery", image: "images/blog-recovery.jpg", credit: "Unsplash", icon: "📈",
+    tech: ["MuleSoft", "Microsoft Dynamics 365 Business Central", "Salesforce", "Inform Billing"],
+    summary: "Taking over a stalled, escalated engagement and getting it back on track through restructured delivery and transparent governance.",
+    result: "Healthy, high-satisfaction status within 2 months",
+    challenge: "The engagement had stalled and the client had escalated. Trust was low, and the plan and its dependencies were unclear.",
+    actions: [
+      "Produced a full delivery plan, dependency analysis and project brief, and restructured delivery with transparent progress governance.",
+      "Integrated Microsoft Business Central with Salesforce and Inform Billing across 3 use cases: account sync across all 3 systems, Salesforce-to-Business Central order flow, and a monthly Inform Billing-to-Business Central invoice run.",
+      "Added MuleSoft payment notification APIs.",
+      "Handed over every integration as a reusable component."
+    ],
+    outcome: "The account was back to healthy, high-satisfaction status within 2 months."
+  },
+  {
+    title: "An end-to-end credit card platform for a leading Indian bank",
+    client: "Leading Indian private sector bank · NTT DATA",
+    period: "Jan 2024 – Present", start: "2024-01", category: "Career", tag: "Banking", image: "images/blog-banking.jpg", credit: "Unsplash", icon: "💳",
+    tech: ["MuleSoft", "Aadhaar KYC", "PAN verification", "API-led Connectivity"],
+    summary: "MuleSoft as the middleware for the whole credit card lifecycle, from application to bill payment.",
+    result: "Faster card issuance and stronger compliance",
+    challenge: "Each stage of the credit card journey (application, KYC, credit limit and bill payment) ran on separate systems. The bank needed one connected flow that met regulatory requirements.",
+    actions: [
+      "Delivered an end-to-end credit card solution with MuleSoft as the middleware, covering the full lifecycle from application to bill payment.",
+      "Brought national ID (Aadhaar) and tax ID (PAN) checks for KYC, credit limit recommendation and bill payment flows into one API layer."
+    ],
+    outcome: "Customers get one connected credit card journey, with faster card issuance and stronger regulatory compliance."
+  },
+  {
+    title: "Multi-system modernisation for a construction and infrastructure client",
+    client: "Construction and infrastructure client · NTT DATA",
+    period: "Feb 2024 – Present", start: "2024-02", category: "Career", tag: "Construction", image: "images/blog-construction.jpg", credit: "Unsplash", icon: "🏗️",
+    tech: ["MuleSoft", "Acumatica", "ASITE", "SugarCRM migration"],
+    summary: "Replacing brittle Zapier flows with MuleSoft, moving CRM from SugarCRM to Acumatica, and syncing project finances in real time.",
+    result: "Gross margin 35% → 55% · Monthly revenue USD 35K → 75K",
+    challenge: "The client depended on Zapier-driven API flows, an ageing SugarCRM and manual financial reconciliation across its active construction projects.",
+    actions: [
+      "Replaced the Zapier-driven API flows with a MuleSoft integration layer.",
+      "Migrated CRM from SugarCRM to Acumatica.",
+      "Delivered real-time Acumatica-to-ASITE sync of payments, bills, and revenue and cost budgets."
+    ],
+    outcome: "Manual financial reconciliation stopped across active projects. Gross margin rose from 35% to 55% and monthly revenue from USD 35K to 75K."
+  },
+  {
+    title: "AI-assisted Agile: embedding ChatGPT in Agile ceremonies",
+    client: "Delivery innovation · NTT DATA",
+    period: "2025", start: "2025-01", category: "AI & Agents", tag: "Generative AI", image: "images/blog-ai.jpg", credit: "Unsplash", icon: "✨",
+    tech: ["Generative AI", "ChatGPT", "Agile / Scrum", "MuleSoft IDP"],
+    summary: "My method for bringing Generative AI into Agile ceremonies. It won NTT DATA's Best Technical Paper award in 2025.",
+    result: "~45% fewer person-hours per sprint",
+    challenge: "Agile ceremonies and project admin take up a lot of team time. I wanted to know how much of it Generative AI could safely take on without hurting quality.",
+    actions: [
+      "Wrote an AI-assisted Agile project management method that embeds ChatGPT into Agile ceremonies, and tested it on a live MuleSoft project.",
+      "Presented it as \"AI-Adopted Agile Project Management: The Time Saver\" to the NTT DATA Management Excellence Program.",
+      "Drove Generative AI tool adoption across delivery teams, raising productivity by up to 15x on targeted workflows.",
+      "Brought AI into pre-sales, including a feasibility assessment of MuleSoft Intelligent Document Processing (IDP) for AutoCAD drawing automation."
+    ],
+    outcome: "Person-hours per sprint fell by around 45% on a live project, and the paper won NTT DATA's Best Technical Paper award for 2025."
+  }
+];
+
+// Gallery: add your photos to an "images" folder, then set src, e.g. { src: "images/award.jpg", caption: "..." }.
+// Items without src show a coloured placeholder.
+const GALLERY = [
+  { caption: "India Delivery Excellence Award, FY25", emoji: "🏆", hue: 220, h: 1.25 },
+  { caption: "Best People Manager, Q4 2025",          emoji: "⭐", hue: 205, h: 0.8 },
+  { caption: "Presenting the Best Technical Paper",   emoji: "🎤", hue: 230, h: 1.0 },
+  { caption: "PMP certification",                     emoji: "🎓", hue: 195, h: 0.85 },
+  { caption: "Team milestone celebration",            emoji: "👥", hue: 215, h: 1.2 },
+  { caption: "Client steering committee",             emoji: "🤝", hue: 240, h: 0.9 },
+  { caption: "Robotics days at Altsense",             emoji: "🤖", hue: 200, h: 1.1 },
+  { caption: "Graduation, Anna University",           emoji: "🎓", hue: 225, h: 0.8 },
+  { caption: "Apisero ACE Award",                     emoji: "🥇", hue: 210, h: 1.0 },
+];
+
+/* ==========================================================
+   APP LOGIC (no need to edit below)
+   ========================================================== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+// --- Routing ---
+const PAGES = ["home", "about", "blogs", "gallery", "contact"];
+function route() {
+  const id = location.hash.slice(1);
+  const page = PAGES.includes(id) ? id : "home";
+  $$("section.page").forEach(s => s.classList.toggle("active", s.id === page));
+  $$(".nav-links a").forEach(a => a.classList.toggle("active", a.dataset.page === page));
+  $("#navLinks").classList.remove("open");
+  window.scrollTo({ top: 0 });
+}
+window.addEventListener("hashchange", route);
+$("#menuBtn").onclick = () => $("#navLinks").classList.toggle("open");
+
+// --- Theme ---
+function safeGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
+function safeSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
+const saved = safeGet("theme");
+if (saved) document.documentElement.dataset.theme = saved;
+$("#themeBtn").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  safeSet("theme", next);
+};
+
+// --- Career blogs (timeline) ---
+let activeTag = "All", newestFirst = true;
+function renderFilters() {
+  const tags = ["All", ...CATEGORIES];
+  $("#filters").innerHTML = tags.map(t => `<button class="filter ${t === activeTag ? "active" : ""}" data-tag="${esc(t)}">${esc(t)}</button>`).join("");
+  $$("#filters .filter").forEach(b => b.onclick = () => { activeTag = b.dataset.tag; renderFilters(); renderPosts(); });
+}
+function renderPosts() {
+  const list = BLOGS.map((b, i) => ({ ...b, i }))
+    .filter(b => activeTag === "All" || b.category === activeTag)
+    .sort((a, b) => newestFirst ? b.start.localeCompare(a.start) : a.start.localeCompare(b.start));
+  const COVER_HUE = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 };
+  let html = list.map(b => {
+    const hue = COVER_HUE[b.category] ?? 221;
+    const ph = `<div class="cover-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
+    const cover = b.image
+      ? `<img src="${esc(b.image)}" alt="" loading="lazy" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`
+      : ph;
+    return `
+      <article class="card post" data-i="${b.i}" tabindex="0">
+        <div class="cover">${cover}<span class="cat-badge">${esc(b.category)}</span></div>
+        <div class="post-body">
+          <div class="meta"><span class="period">${esc(b.period)}</span>${b.tag ? `<span>· ${esc(b.tag)}</span>` : ""}</div>
+          <h3>${esc(b.title)}</h3>
+          <p>${esc(b.summary)}</p>
+          ${b.result ? `<div class="result">📊 ${esc(b.result)}</div>` : ""}
+          <span class="more">Read more →</span>
+        </div>
+      </article>`;
+  }).join("");
+  if (!list.length) html = `<div class="card empty"><div class="em">✍️</div><h3>${esc(activeTag)} posts are coming soon</h3><p>I'm writing these now. Check back shortly.</p></div>`;
+  $("#posts").innerHTML = html;
+  $$("#posts .post").forEach(p => {
+    const open = () => openPost(+p.dataset.i);
+    p.onclick = open; p.onkeydown = e => e.key === "Enter" && open();
+  });
+}
+$("#sortBtn").onclick = () => {
+  newestFirst = !newestFirst;
+  $("#sortBtn").textContent = newestFirst ? "Sort: Newest first ↓" : "Sort: Oldest first ↑";
+  renderPosts();
+};
+function openPost(i) {
+  const b = BLOGS[i];
+  const head = `
+    <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""}</div>
+    <h2>${esc(b.title)}</h2>
+    ${b.client ? `<div class="pm-client">${esc(b.client)}</div>` : ""}
+    ${b.tech ? `<div class="chips">${b.tech.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>` : ""}`;
+  const story = b.challenge ? `
+    <h4>The challenge</h4><p>${esc(b.challenge)}</p>
+    <h4>What we did</h4><ul>${b.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
+    <h4>The result</h4><p class="outcome">${esc(b.outcome)}</p>`
+    : `<div style="margin-top:18px">${(b.body || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+  const img = b.image ? `<img src="${esc(b.image)}" alt="" style="width:100%;border-radius:10px;margin:0 0 18px" onerror="this.remove()">${b.credit ? `<div style="font-size:.78rem;color:var(--muted);margin:-12px 0 16px">Photo: ${esc(b.credit)}</div>` : ""}` : "";
+  $("#pmContent").innerHTML = img + head + story;
+  $("#postOverlay").classList.add("open");
+  $("#postOverlay").scrollTop = 0;
+}
+
+// --- Gallery ---
+function galleryMedia(g, big) {
+  if (g.src) return `<img src="${esc(g.src)}" alt="${esc(g.caption)}" loading="lazy">`;
+  const style = `background:linear-gradient(135deg,hsl(${g.hue} 75% 52%),hsl(${g.hue + 15} 80% 28%));` + (big ? "" : `aspect-ratio:1/${g.h || 1};`);
+  return `<div class="ph" style="${style}">${g.emoji || "🖼️"}</div>`;
+}
+$("#galleryGrid").innerHTML = GALLERY.map((g, i) => `<figure class="g-item" data-i="${i}">${galleryMedia(g)}<figcaption>${esc(g.caption)}</figcaption></figure>`).join("");
+let lbIndex = 0;
+function showLb(i) {
+  lbIndex = (i + GALLERY.length) % GALLERY.length;
+  const g = GALLERY[lbIndex];
+  $("#lbFigure").innerHTML = galleryMedia(g, true) + `<figcaption>${esc(g.caption)}</figcaption>`;
+  $("#lightbox").classList.add("open");
+}
+$$(".g-item").forEach(el => el.onclick = () => showLb(+el.dataset.i));
+$("#lbPrev").onclick = e => { e.stopPropagation(); showLb(lbIndex - 1); };
+$("#lbNext").onclick = e => { e.stopPropagation(); showLb(lbIndex + 1); };
+
+// --- Overlays ---
+$$(".overlay").forEach(o => o.addEventListener("click", e => {
+  if (e.target === o || e.target.closest("[data-close]")) o.classList.remove("open");
+}));
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") $$(".overlay").forEach(o => o.classList.remove("open"));
+  if ($("#lightbox").classList.contains("open")) {
+    if (e.key === "ArrowLeft") showLb(lbIndex - 1);
+    if (e.key === "ArrowRight") showLb(lbIndex + 1);
+  }
+});
+
+// --- Contact form (opens the visitor's email app) ---
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 3000); }
+$("#contactForm").onsubmit = e => {
+  e.preventDefault();
+  const name = $("#name").value, email = $("#email").value, reason = $("#reason").value, msg = $("#msg").value;
+  const subject = encodeURIComponent(`[${reason}] Message from ${name}`);
+  const body = encodeURIComponent(`${msg}\n\n— ${name} (${email})`);
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  toast("Opening your email app…");
+};
+
+// --- Init ---
+$("#year").textContent = new Date().getFullYear();
+renderFilters(); renderPosts(); route();
+</script>
+</body>
+</html>
