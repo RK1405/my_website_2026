@@ -32,16 +32,27 @@ for (const b of posts) {
 }
 if (new Set(posts.map(b => b.slug)).size !== posts.length) throw new Error("Two posts share the same slug");
 
+// ---------- section titles and descriptions (PAGE_META in index.html) ----------
+const metaStart = html.indexOf("const PAGE_META = {");
+const metaEnd = html.indexOf("\n};", metaStart);
+if (metaStart < 0 || metaEnd < 0) throw new Error("Could not find PAGE_META in index.html");
+const PAGE_META = vm.runInNewContext("(" + html.slice(metaStart + "const PAGE_META = ".length, metaEnd + 2) + ")");
+const SECTIONS = ["about", "blogs", "gallery", "contact"];
+for (const s of SECTIONS) if (!PAGE_META[s]) throw new Error("PAGE_META is missing " + s);
+
 // ---------- pieces reused from index.html ----------
 const pick = (re, what) => { const m = html.match(re); if (!m) throw new Error("Could not find " + what); return m[0]; };
 const style = pick(/<style>[\s\S]*?<\/style>/, "<style>");
 const fonts = pick(/<link rel="preconnect"[\s\S]*?rel="stylesheet" \/>/, "font links");
 const siteName = pick(/<title>[^<]*<\/title>/, "<title>").replace(/<\/?title>/g, "").split(" · ")[0];
-// Header and footer, with links pointing back up to the main page
-const up = s => s.replace(/href="#/g, 'href="../#').replace(/href="resume\.pdf"/g, 'href="../resume.pdf"');
-const header = up(pick(/<header class="nav">[\s\S]*?<\/header>/, "header"))
+// Section links (#home, #about, ...) become clean addresses (/, /about/, ...)
+const cleanLinks = s => s
+  .replace(/href="#home"/g, 'href="/"')
+  .replace(/href="#(about|blogs|gallery|contact)"/g, 'href="/$1/"')
+  .replace(/href="resume\.pdf"/g, 'href="/resume.pdf"');
+const header = cleanLinks(pick(/<header class="nav">[\s\S]*?<\/header>/, "header"))
   .replace('data-page="blogs"', 'data-page="blogs" class="active"');
-const footer = up(pick(/<footer>[\s\S]*?<\/footer>/, "footer"))
+const footer = cleanLinks(pick(/<footer>[\s\S]*?<\/footer>/, "footer"))
   .replace('<span id="year"></span>', String(new Date().getFullYear()));
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -102,7 +113,7 @@ ${style}
 ${header}
 <main class="container">
   <section class="page active" id="post"><article class="article">
-    <a class="back-link" href="../#blogs">← All blogs</a>
+    <a class="back-link" href="/blogs/">← All blogs</a>
     ${cover}
     <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""}</div>
     <h1>${esc(b.title)}</h1>
@@ -158,17 +169,52 @@ for (const f of COPY) {
 }
 fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
 
-// The published index.html links blog cards to the real post pages
+// The published pages: home plus one per section, each opening on its own section with its
+// own title, description, canonical address and link preview. Links use clean addresses.
 const flag = "const STATIC_POSTS = false;";
 if (!html.includes(flag)) throw new Error("index.html is missing: " + flag);
-fs.writeFileSync(path.join(OUT, "index.html"), html.replace(flag, "const STATIC_POSTS = true;"));
+const homeDescription = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
+function sectionPage(section) {
+  const isHome = section === "home";
+  const title = isHome ? pick(/<title>[^<]*<\/title>/, "<title>").replace(/<\/?title>/g, "") : `${PAGE_META[section].title} · ${siteName}`;
+  const description = isHome ? homeDescription : PAGE_META[section].description;
+  const url = isHome ? `${SITE_URL}/` : `${SITE_URL}/${section}/`;
+  const image = `${SITE_URL}/images/me.jpg`;
+  const head = `<base href="/" />
+<link rel="canonical" href="${url}" />
+<meta property="og:type" content="${isHome ? "profile" : "website"}" />
+<meta property="og:site_name" content="${esc(siteName)}" />
+<meta property="og:title" content="${esc(title)}" />
+<meta property="og:description" content="${esc(description)}" />
+<meta property="og:url" content="${url}" />
+<meta property="og:image" content="${image}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${esc(title)}" />
+<meta name="twitter:description" content="${esc(description)}" />
+<meta name="twitter:image" content="${image}" />`;
+  let page = cleanLinks(html.replace(flag, "const STATIC_POSTS = true;"))
+    .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
+    .replace(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${esc(description)}" />`)
+    .replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />\n${head}`);
+  // Open on the right section straight away, before any script runs
+  const from = `<section class="page" id="${section}">`;
+  if (!page.includes(from)) throw new Error("Could not find the " + section + " section");
+  page = page.replace(from, `<section class="page active" id="${section}">`);
+  return page;
+}
+fs.writeFileSync(path.join(OUT, "index.html"), sectionPage("home"));
+fs.writeFileSync(path.join(OUT, "404.html"), sectionPage("home").replace(/<link rel="canonical"[^>]*>\n/, ""));
+for (const s of SECTIONS) {
+  fs.mkdirSync(path.join(OUT, s), { recursive: true });
+  fs.writeFileSync(path.join(OUT, s, "index.html"), sectionPage(s));
+}
 
 posts.forEach((b, k) => {
   fs.writeFileSync(path.join(OUT, "blog", `${b.slug}.html`), postPage(b, posts[k - 1], posts[k + 1]));
 });
 
 const today = new Date().toISOString().slice(0, 10);
-const urls = [`${SITE_URL}/`, ...posts.map(b => `${SITE_URL}/blog/${b.slug}.html`)];
+const urls = [`${SITE_URL}/`, ...SECTIONS.map(s => `${SITE_URL}/${s}/`), ...posts.map(b => `${SITE_URL}/blog/${b.slug}.html`)];
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(u => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n") + `\n</urlset>\n`);

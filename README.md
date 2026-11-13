@@ -15,7 +15,7 @@ Live at **https://rksasikumar.com**
 Blog posts and gallery items are listed near the bottom of `index.html`, under **EDIT YOUR CONTENT HERE**.
 
 ## How publishing works
-You only edit `index.html`. On every push, GitHub Actions runs `node tools/build-pages.mjs`, which reads the blog posts from the `BLOGS` list and creates a separate page for each one with its own title, description and preview image, so posts can appear in search results and show proper previews on LinkedIn and WhatsApp. GitHub Pages must be set to **Settings → Pages → Source: GitHub Actions**.
+You only edit `index.html`. On every push, GitHub Actions runs `node tools/build-pages.mjs`, which publishes the site with clean addresses: `/about/`, `/blogs/`, `/gallery/`, `/contact/` (titles and descriptions come from `PAGE_META`), and one page per blog post at `/blog/<slug>.html` (from the `BLOGS` list). Each page has its own title, description and link preview, so it can appear in search results on its own. Old `#about`-style links redirect to the clean addresses. GitHub Pages must be set to **Settings → Pages → Source: GitHub Actions**.
 
 Each post needs a unique `slug` (lowercase words joined by hyphens). Don't change a slug once the post has been shared.
 

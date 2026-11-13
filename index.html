@@ -539,6 +539,16 @@
    ========================================================== */
 const CONTACT_EMAIL = "rk@rksasikumar.com";
 
+// Title and description for each section. On the published site every section has its own
+// address (rksasikumar.com/about/ and so on), and these are what Google and link previews show.
+// The Home page uses the <title> and description at the top of this file.
+const PAGE_META = {
+  about:   { title: "About Me", description: "Experience, skills, certifications and awards of Ramakrishnann Sasikumar, a PMP and CSM certified MuleSoft, Salesforce and ERP Program Manager at NTT DATA." },
+  blogs:   { title: "Blogs", description: "Case studies from MuleSoft, Salesforce and ERP programmes, plus writing on AI agents in delivery, by Ramakrishnann Sasikumar." },
+  gallery: { title: "Gallery", description: "Award ceremonies, team milestones and moments from Ramakrishnann Sasikumar's career." },
+  contact: { title: "Contact", description: "Contact Ramakrishnann Sasikumar about programme leadership, Delivery Head roles in India, or AI Project Manager and Senior PM roles worldwide." },
+};
+
 // Blog categories, shown as filter buttons in this order.
 const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
 
@@ -884,19 +894,32 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">
 
 // --- Routing ---
 const PAGES = ["home", "about", "blogs", "gallery", "contact"];
-// The build (tools/build-pages.mjs) sets this to true on the published site, where every
-// blog post also has its own page at blog/<slug>.html. Leave it as false here.
+// The build (tools/build-pages.mjs) sets this to true on the published site. There, every
+// section has a clean address (/about/, /blogs/, ...) and every blog post has its own page
+// (/blog/<slug>.html). Leave it as false here, so this file also works when opened directly.
 const STATIC_POSTS = false;
-const SITE_BASE = location.href.split("#")[0].replace(/[^/]*$/, "");
-const postHref = slug => STATIC_POSTS ? "blog/" + slug + ".html" : "#blogs/" + slug;
+const postHref = slug => STATIC_POSTS ? "/blog/" + slug + ".html" : "#blogs/" + slug;
+const pageHref = page => STATIC_POSTS ? (page === "home" ? "/" : "/" + page + "/") : "#" + page;
 const SITE_TITLE = document.title;
+const SITE_NAME = SITE_TITLE.split(" · ")[0];
+function currentPage() {
+  const hash = decodeURIComponent(location.hash.slice(1));
+  if (!STATIC_POSTS) return hash;
+  if (hash) {
+    // An old #link: move it to the clean address
+    const post = hash.startsWith("blogs/") && BLOGS.find(b => b.slug === hash.slice(6));
+    location.replace(post ? postHref(post.slug) : pageHref(PAGES.includes(hash) ? hash : "home"));
+    return null;
+  }
+  return location.pathname.replace(/^\/+|\/+$/g, "") || "home";
+}
 function route() {
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = currentPage();
+  if (id === null) return;
   let page = PAGES.includes(id) ? id : "home";
-  document.title = SITE_TITLE;
-  if (id.startsWith("blogs/")) {
+  document.title = page === "home" ? SITE_TITLE : PAGE_META[page].title + " · " + SITE_NAME;
+  if (!STATIC_POSTS && id.startsWith("blogs/")) {
     const post = BLOGS.find(b => b.slug === id.slice(6));
-    if (post && STATIC_POSTS) { location.replace(SITE_BASE + postHref(post.slug)); return; }
     if (post) { renderArticle(post); page = "post"; } else page = "blogs";
   }
   $$("section.page").forEach(s => s.classList.toggle("active", s.id === page));
@@ -906,6 +929,19 @@ function route() {
   window.scrollTo({ top: 0 });
 }
 window.addEventListener("hashchange", route);
+window.addEventListener("popstate", route);
+// On the published site, switch sections instantly while keeping clean addresses
+document.addEventListener("click", e => {
+  if (!STATIC_POSTS || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  const a = e.target.closest("a[href]");
+  if (!a || a.target || a.hasAttribute("download")) return;
+  const u = new URL(a.href);
+  const id = u.pathname.replace(/^\/+|\/+$/g, "") || "home";
+  if (u.origin !== location.origin || u.hash || !PAGES.includes(id)) return;
+  e.preventDefault();
+  if (u.pathname !== location.pathname) history.pushState(null, "", u.pathname);
+  route();
+});
 $("#menuBtn").onclick = () => $("#navLinks").classList.toggle("open");
 
 // --- Theme ---
@@ -969,7 +1005,7 @@ function renderBlock(x) {
 function renderArticle(b) {
   const ordered = [...BLOGS].sort((x, y) => y.start.localeCompare(x.start));
   const k = ordered.indexOf(b), newer = ordered[k - 1], older = ordered[k + 1];
-  const url = SITE_BASE + postHref(b.slug);
+  const url = location.href.split("#")[0] + "#blogs/" + b.slug;
   const hue = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 }[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
   const cover = b.image
@@ -1053,6 +1089,7 @@ $("#contactForm").onsubmit = e => {
 // --- Init ---
 $("#year").textContent = new Date().getFullYear();
 if (STATIC_POSTS) $$("a[data-post]").forEach(a => a.href = postHref(a.dataset.post));
+if (STATIC_POSTS) $$("a[href^='#']").forEach(a => { const id = a.getAttribute("href").slice(1); if (PAGES.includes(id)) a.href = pageHref(id); });
 renderFilters(); renderPosts(); route();
 </script>
 </body>
