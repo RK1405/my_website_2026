@@ -119,6 +119,15 @@
   .highlight { padding: 26px; }
   .highlight .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft); display: grid; place-items: center; font-size: 1.3rem; margin-bottom: 14px; }
   .highlight .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .hobbies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .hobby { padding: 26px; display: flex; flex-direction: column; }
+  .hobby .ic { width: 46px; height: 46px; border-radius: 12px; background: var(--accent-soft); display: grid; place-items: center; margin-bottom: 14px; }
+  .hobby .ic svg { width: 24px; height: 24px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .hobby .ic svg .fill { fill: var(--accent); stroke: none; }
+  .hobby h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .hobby p { color: var(--muted); font-size: .95rem; flex: 1; }
+  .hobby-link { margin-top: 14px; font-weight: 600; font-size: .9rem; }
+  @media (max-width: 800px) { .hobbies { grid-template-columns: 1fr; } }
   .highlight h3 { font-size: 1.15rem; margin-bottom: 6px; }
   .highlight p { color: var(--muted); font-size: .95rem; }
   .highlight p strong { color: var(--text); font-weight: 700; }
@@ -433,6 +442,18 @@
     <div class="two-col">
       <div class="card list-card"><h3>M.E., Solar Energy</h3><p style="color:var(--muted)">Anna University · 2019</p></div>
       <div class="card list-card"><h3>B.E., Electrical and Electronics Engineering</h3><p style="color:var(--muted)">Anna University · 2016</p></div>
+    </div>
+
+    <h2 class="sub">Beyond work</h2>
+    <div class="hobbies">
+      <div class="card hobby"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="11.5" rx="2"/><path d="M3 9l1.2-4.6 16.4 0 0 4.6"/><path d="M8.2 4.4L6.6 9"/><path d="M13.2 4.4L11.6 9"/><path d="M18.2 4.4L16.6 9"/></svg></div><h3>Movies</h3>
+        <p>A true cinephile. Give me a first-day-first-show or a quiet classic and I'm happy. I love films for their storytelling, and I've even built an AI agent to make sure I never miss a booking.</p>
+        <a class="hobby-link" href="#blogs/ai-agent-movie-tickets">Meet the agent that watches for my tickets →</a></div>
+      <div class="card hobby"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10a4.5 4.5 0 0 1 4.4 5.4l-.8 3.9a2.4 2.4 0 0 1-4.2 1l-2-2.3h-4.8l-2 2.3a2.4 2.4 0 0 1-4.2-1l-.8-3.9A4.5 4.5 0 0 1 7 8z"/><path d="M7.5 11v3"/><path d="M6 12.5h3"/><circle class="fill" cx="15.5" cy="11.6" r=".9"/><circle class="fill" cx="17.3" cy="13.4" r=".9"/></svg></div><h3>Gaming</h3>
+        <p>A lifelong gamer, currently counting the days to GTA 6. Years of gaming have sharpened my intuition and cognitive skills: reading situations fast, spotting patterns and making calm decisions under pressure. They're skills I use every day in delivery.</p></div>
+      <div class="card hobby"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14.5V20h10v-5.5"/><path d="M7 14.5a3.8 3.8 0 0 1-1-7.3A4.3 4.3 0 0 1 12 4.6a4.3 4.3 0 0 1 6 2.6 3.8 3.8 0 0 1-1 7.3z"/><path d="M7 17.5h10"/></svg></div><h3>Cooking</h3>
+        <p>I started as Mom's little assistant in the kitchen and grew into a pretty good chef. Biryani, fish curry and paneer butter masala are my specialities.</p>
+        <a class="hobby-link" href="#contact">Ping me for recipes →</a></div>
     </div>
   </section>
 
