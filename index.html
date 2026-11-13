@@ -225,8 +225,12 @@
   .article h2 { font-size: 1.25rem; margin: 30px 0 10px; color: var(--accent-2); }
   .article p, .article li { font-size: 1.04rem; }
   .article p { margin-bottom: 14px; }
-  .article ul { padding-left: 22px; }
+  .article ul { padding-left: 22px; margin-bottom: 16px; }
   .article li { margin-bottom: 8px; }
+  .article ol.steps { padding-left: 0; list-style: none; counter-reset: st; }
+  .article ol.steps li { counter-increment: st; position: relative; padding: 12px 16px 12px 56px; margin-bottom: 10px; background: var(--surface-2); border-radius: 10px; }
+  .article ol.steps li::before { content: counter(st); position: absolute; left: 14px; top: 12px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
+  .article blockquote { margin: 20px 0; padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; font-size: 1.08rem; font-style: italic; color: var(--accent-2); }
   .article .outcome { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: 8px; font-weight: 500; }
   .share { margin-top: 36px; padding: 20px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
   .share b { margin-right: 6px; }
@@ -508,11 +512,71 @@ const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
 // Two formats:
 //  1) Project story (used for Career): challenge, actions[], outcome, tech[], result.
 //  Card image: add  image: "images/your-photo.jpg"  to any post. Without it, a blue cover with "icon" is shown.
-//  2) Simple post (good for Life / Travel): just "body" as a list of paragraphs. Example:
+//  2) Simple post (good for Life / Travel): "body" is a list of paragraphs. Inside body you can also use
+//     { h: "Heading" }, { list: ["a", "b"] }, { steps: ["first", "second"] } and { quote: "..." }. Example:
 //     { slug: "first-trip-to-dubai", title: "My first trip to Dubai", category: "Travel", period: "Mar 2026", start: "2026-03",
 //       tag: "Dubai", summary: "One-line teaser shown on the card.",
 //       body: ["First paragraph...", "Second paragraph..."] },
 const BLOGS = [
+  {
+    slug: "ai-agent-movie-tickets",
+    title: "I hired an AI agent to wait in line for my movie tickets",
+    client: "Personal project · Agentic AI",
+    period: "Nov 2026", start: "2026-11", category: "AI & Agents", tag: "Agentic AI", icon: "🎬",
+    tech: ["Claude", "Scheduled tasks", "Speko voice AI", "Web search", "Push notifications"],
+    summary: "Meet Ava: an AI agent that checked every hour whether my favourite cinema had opened bookings for Suriya's new film, and was told to phone me the moment it did.",
+    result: "An agent that calls me, so I don't have to keep refreshing",
+    body: [
+      "Every Suriya fan in Chennai knows the routine. A new film is days away, and you keep opening booking apps to see whether your favourite cinema has finally opened its shows. Refresh. Nothing. Refresh again an hour later.",
+      "This time the film was \"Scene\", directed by Jithu Madhavan and releasing on 6 November 2026. I didn't want just any show. I wanted my favourite screen: Screen 1 at Seven Screen's Cinemas in Vandalur, on Friday 6 or Saturday 7 November, at 4 PM or later.",
+      "Two days before release, the cinema still hadn't listed the film. Bookings could open at any hour. So instead of refreshing, I handed the job to an AI agent.",
+      { h: "Meet Ava" },
+      "Ava is an AI assistant I set up in Claude as a scheduled task that runs every hour. Her whole job description fits in one sentence:",
+      { quote: "Check whether bookings have opened for \"Scene\" at Seven Screen's, Vandalur, for 6 or 7 November. If they have, phone Rama." },
+      "That's it. A narrow job with a clear finish line, which is exactly what makes an agent reliable.",
+      { h: "How Ava checks" },
+      "Each hour Ava reads the cinema's page and the film's page on District, the booking site, then searches the web for other booking sources such as BookMyShow, Ticketnew or the cinema's own site. Those sometimes show screen names like \"Screen 1\", which District doesn't.",
+      { h: "Three answers, not two" },
+      "The most important design decision was refusing to treat this as a yes-or-no question. Booking sites rarely show everything at once, so Ava sorts what she sees into three states:",
+      { list: [
+        "OPEN: \"Scene\" is bookable at Seven Screen's on 6 or 7 November, with a show at or after 4 PM.",
+        "LIKELY OPEN: the cinema's dates include 6 or 7 November and \"Scene\" is listed there, but the exact show times can't be confirmed yet.",
+        "NOT OPEN: anything else. Ava stays quiet and checks again next hour."
+      ] },
+      "\"Likely open\" was the trick. For a first-day show, being told a little early beats being told too late. When Ava calls in that state, she's honest about it and says bookings \"look open\" rather than \"are open\".",
+      { h: "Why a phone call?" },
+      "A push notification is easy to miss among a hundred others. A phone call isn't. So when bookings open, Ava uses Speko, a voice AI platform, to ring my mobile and tell me in a few seconds which dates and shows are available.",
+      "The call has rules too. It rings for up to 45 seconds and lasts at most two minutes. Ava only counts it as picked up if a real person answers. If I miss it, she waits about 100 seconds and tries once more. If I still don't answer, or the call can't be made at all, she sends a push notification with the dates, show times, booking link and the reason the call didn't work.",
+      { h: "The guardrails" },
+      "This is where the programme manager in me took over. An agent that can act on its own needs boundaries even more than a person does:",
+      { list: [
+        "Never book, reserve or pay. Ava informs; I decide. Anything involving money stays with a human.",
+        "At most two call attempts, and stop immediately on any error such as calling credits running out.",
+        "A hard deadline. After 4 PM on 7 November the watch ends and Ava switches herself off.",
+        "Two copies of the task run each hour for reliability, and whichever finishes the job turns both off, so I never get a duplicate call.",
+        "A shared history. The instructions record what the sites showed at the last check, so every run starts with context instead of from zero."
+      ] },
+      { h: "One run, start to finish" },
+      { steps: [
+        "Check the time in Chennai. If the watch window has passed, switch off and stop.",
+        "Read both District pages and search for other booking sources.",
+        "Decide: open, likely open, or not open. If not open, stop quietly.",
+        "Phone Rama through Speko, retrying once if he doesn't pick up.",
+        "If the call fails or goes unanswered, send a push notification instead.",
+        "Job done: switch off both copies of the task."
+      ] },
+      { h: "What it taught me about agentic AI" },
+      "I build integration programmes for a living, and Ava turned out to be a tiny delivery project. The same disciplines applied:",
+      { list: [
+        "Write the brief like a statement of work: what's in scope, what's out of scope, and what \"done\" means.",
+        "Define the states and the exit conditions. An agent that doesn't know when to stop is a liability, not a helper.",
+        "Plan the escalation path, just like a RAID log: call, retry, then notify.",
+        "Keep a human in the loop for anything irreversible, like spending money."
+      ] },
+      "AI agents are most useful when their job is small, clear and boring to do by hand. Waiting for a booking window is the perfect example. I wrote one good set of instructions, and the agent did the waiting for me.",
+      "Next time a film I'm excited about is on its way, I won't be refreshing a booking app. I'll be waiting for Ava to call."
+    ]
+  },
   {
     slug: "iot-robotics-altsense",
     title: "Delivering Industrial IoT and robotics products",
@@ -720,6 +784,14 @@ $("#sortBtn").onclick = () => {
   $("#sortBtn").textContent = newestFirst ? "Sort: Newest first ↓" : "Sort: Oldest first ↑";
   renderPosts();
 };
+function renderBlock(x) {
+  if (typeof x === "string") return `<p>${esc(x)}</p>`;
+  if (x.h) return `<h2>${esc(x.h)}</h2>`;
+  if (x.list) return `<ul>${x.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
+  if (x.steps) return `<ol class="steps">${x.steps.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`;
+  if (x.quote) return `<blockquote>${esc(x.quote)}</blockquote>`;
+  return "";
+}
 function renderArticle(b) {
   const ordered = [...BLOGS].sort((x, y) => y.start.localeCompare(x.start));
   const k = ordered.indexOf(b), newer = ordered[k - 1], older = ordered[k + 1];
@@ -733,7 +805,7 @@ function renderArticle(b) {
     <h2>The challenge</h2><p>${esc(b.challenge)}</p>
     <h2>What we did</h2><ul>${b.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ul>
     <h2>The result</h2><p class="outcome">${esc(b.outcome)}</p>`
-    : `<div style="margin-top:22px">${(b.body || []).map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+    : `<div style="margin-top:22px">${(b.body || []).map(renderBlock).join("")}</div>`;
   const text = encodeURIComponent(b.title), link = encodeURIComponent(url);
   $("#article").innerHTML = `
     <a class="back-link" href="#blogs">← All blogs</a>
