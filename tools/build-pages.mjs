@@ -68,7 +68,7 @@ const HUE = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 };
 
 function postPage(b, newer, older) {
   const url = `${SITE_URL}/blog/${b.slug}.html`;
-  const image = `${SITE_URL}/${b.image || "images/me.jpg"}`;
+  const image = `${SITE_URL}/${b.image || "images/social-card.jpg"}`;
   const title = `${b.title} · ${siteName}`;
   const hue = HUE[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
@@ -179,7 +179,7 @@ function sectionPage(section) {
   const title = isHome ? pick(/<title>[^<]*<\/title>/, "<title>").replace(/<\/?title>/g, "") : `${PAGE_META[section].title} · ${siteName}`;
   const description = isHome ? homeDescription : PAGE_META[section].description;
   const url = isHome ? `${SITE_URL}/` : `${SITE_URL}/${section}/`;
-  const image = `${SITE_URL}/images/me.jpg`;
+  const image = `${SITE_URL}/images/social-card.jpg`;
   const head = `<base href="/" />
 <link rel="canonical" href="${url}" />
 <meta property="og:type" content="${isHome ? "profile" : "website"}" />
@@ -188,6 +188,9 @@ function sectionPage(section) {
 <meta property="og:description" content="${esc(description)}" />
 <meta property="og:url" content="${url}" />
 <meta property="og:image" content="${image}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="627" />
+<meta property="og:image:alt" content="${esc(siteName)}: Program Manager, MuleSoft, Salesforce and ERP" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${esc(title)}" />
 <meta name="twitter:description" content="${esc(description)}" />
