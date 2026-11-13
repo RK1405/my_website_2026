@@ -107,9 +107,9 @@ function postPage(b, newer, older) {
 <meta name="twitter:image" content="${image}" />
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 ${fonts}
-<link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+<link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png?v=2" />
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=2" />
 <meta name="theme-color" content="#0b2e6f" />
 ${style}
 </head>

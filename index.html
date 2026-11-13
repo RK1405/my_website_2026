@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="icon" href="favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
-<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+<link rel="icon" href="favicon.ico?v=2" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=2" />
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=2" />
 <meta name="theme-color" content="#0b2e6f" />
 <style>
   /* ============ THEME TOKENS (blue & white) ============ */
@@ -203,11 +203,22 @@
   .post .more { font-weight: 600; font-size: .9rem; color: var(--accent); }
 
   /* ============ GALLERY ============ */
-  .gallery { columns: 3 260px; column-gap: 16px; }
-  .g-item { break-inside: avoid; margin-bottom: 16px; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; position: relative; border: 1px solid var(--border); }
-  .g-item img, .g-item .ph { width: 100%; transition: transform .4s; }
+  .gal-h { margin-top: 8px; }
+  .moments { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 820px; }
+  .cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 1000px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .moments, .cert-grid { grid-template-columns: 1fr; } }
+  .g-item { margin: 0; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; position: relative; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+  .g-media { overflow: hidden; }
+  .g-item img, .g-item .ph { width: 100%; display: block; transition: transform .4s; }
   .g-item:hover img, .g-item:hover .ph { transform: scale(1.04); }
-  .g-item figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 14px 12px; color: #fff; font-size: .9rem; background: linear-gradient(transparent, rgba(8,20,45,.75)); }
+  .moments .g-media { aspect-ratio: 3 / 4; }
+  .moments .g-media img { height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .g-item figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 34px 16px 14px; color: #fff; font-size: .95rem; background: linear-gradient(transparent, rgba(8,20,45,.8)); }
+  .g-item.cert .g-media { aspect-ratio: 4 / 3; background: #ffffff; position: relative; border-bottom: 1px solid var(--border); }
+  .g-item.cert .g-media img { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); object-fit: contain; }
+  .g-item.cert:hover .g-media img { transform: scale(1.03); }
+  .g-item.cert figcaption { position: static; background: none; color: var(--text); padding: 14px 16px 16px; font-size: .9rem; font-weight: 500; line-height: 1.45; }
   .ph { display: grid; place-items: center; color: rgba(255,255,255,.92); font-size: 2.4rem; }
 
   /* ============ CONTACT ============ */
@@ -482,10 +493,13 @@
   <section class="page" id="gallery">
     <div class="section-head">
       <div class="eyebrow">Gallery</div>
-      <h1 class="page-title">Moments</h1>
-      <p class="lead">Award ceremonies, team milestones and events along the way. Click any photo to enlarge it.</p>
+      <h1 class="page-title">Highlights</h1>
+      <p class="lead">Award nights, certifications and recognition along the way. Click any image to enlarge it.</p>
     </div>
-    <div class="gallery" id="galleryGrid"></div>
+    <h2 class="sub gal-h">Moments</h2>
+    <div class="moments" id="galMoments"></div>
+    <h2 class="sub gal-h">Certifications & recognition</h2>
+    <div class="cert-grid" id="galCerts"></div>
   </section>
 
   <!-- ===================== CONTACT ===================== -->
@@ -877,19 +891,15 @@ const BLOGS = [
   }
 ];
 
-// Gallery: upload the photo to the "images" folder FIRST, then add  src: "images/your-photo.jpg",  to a line below.
-// To replace a placeholder, add src to that line (don't add a new line). Items without src show a coloured placeholder.
+// Gallery: upload the photo to the "images" folder FIRST, then add a line below.
+// group: "moments" (event photos, shown large) or "certs" (certificates and badges, shown whole in matching cards).
 const GALLERY = [
-  { src: "images/award-fy25.jpg", caption: "India Delivery Excellence Award, FY25", emoji: "🏆", hue: 220 },
-  { src: "images/award-stage-fy25.jpg", caption: "Sharing stage with my mentor and my better half", emoji: "🤝", hue: 215 },
-  { src: "images/cert-pmp.jpg", caption: "Project Management Professional (PMP), Project Management Institute", emoji: "🎓", hue: 195 },
-  { src: "images/cert-salesforce-admin.jpg", caption: "Salesforce Certified Platform Administrator", emoji: "☁️", hue: 205 },
-  { src: "images/badge-agentforce-india-2024.jpg", caption: "Salesforce Partner Success India 2024: Activate Agentforce", emoji: "🤖", hue: 20 },
-  { src: "images/award-raving-reviews-2022.jpg", caption: "Raving Reviews award, Apisero (now NTT DATA), August 2022", emoji: "🏅", hue: 225 },
-  { caption: "Presenting the Best Technical Paper",   emoji: "🎤", hue: 230, h: 1.0 },
-  { caption: "Team milestone celebration",            emoji: "👥", hue: 215, h: 1.2 },
-  { caption: "Graduation, Anna University",           emoji: "🎓", hue: 225, h: 0.8 },
-  { caption: "Apisero ACE Award",                     emoji: "🥇", hue: 210, h: 1.0 },
+  { group: "moments", src: "images/award-fy25.jpg", caption: "India Delivery Excellence Award, FY25" },
+  { group: "moments", src: "images/award-stage-fy25.jpg", caption: "Sharing stage with my mentor and my better half" },
+  { group: "certs", src: "images/cert-pmp.jpg", caption: "Project Management Professional (PMP), Project Management Institute" },
+  { group: "certs", src: "images/cert-salesforce-admin.jpg", caption: "Salesforce Certified Platform Administrator" },
+  { group: "certs", src: "images/badge-agentforce-india-2024.jpg", caption: "Salesforce Partner Success India 2024: Activate Agentforce" },
+  { group: "certs", src: "images/award-raving-reviews-2022.jpg", caption: "Raving Reviews award, Apisero (now NTT DATA), August 2022" },
 ];
 
 /* ==========================================================
@@ -1058,7 +1068,9 @@ function galleryMedia(g, big) {
   if (!g.src) return ph;
   return `<img src="${esc(g.src)}" alt="${esc(g.caption)}" loading="lazy" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`;
 }
-$("#galleryGrid").innerHTML = GALLERY.map((g, i) => `<figure class="g-item" data-i="${i}">${galleryMedia(g)}<figcaption>${esc(g.caption)}</figcaption></figure>`).join("");
+const galItem = (g, i) => `<figure class="g-item ${g.group === "certs" ? "cert" : ""}" data-i="${i}"><div class="g-media">${galleryMedia(g)}</div><figcaption>${esc(g.caption)}</figcaption></figure>`;
+$("#galMoments").innerHTML = GALLERY.map((g, i) => g.group === "certs" ? "" : galItem(g, i)).join("");
+$("#galCerts").innerHTML = GALLERY.map((g, i) => g.group === "certs" ? galItem(g, i) : "").join("");
 let lbIndex = 0;
 function showLb(i) {
   lbIndex = (i + GALLERY.length) % GALLERY.length;
