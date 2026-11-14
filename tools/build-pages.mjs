@@ -51,7 +51,7 @@ const cleanLinks = s => s
   .replace(/href="#home"/g, 'href="/"')
   .replace(/href="#(about|blogs|gallery|contact)"/g, 'href="/$1/"')
   .replace(/href="resume\.pdf"/g, 'href="/resume.pdf"');
-const header = cleanLinks(pick(/<header class="nav">[\s\S]*?<\/header>/, "header"))
+const header = cleanLinks(pick(/<header class="nav"[^>]*>[\s\S]*?<\/header>/, "header"))
   .replace('data-page="blogs"', 'data-page="blogs" class="active"');
 const footer = cleanLinks(pick(/<footer>[\s\S]*?<\/footer>/, "footer"))
   .replace('<span id="year"></span>', String(new Date().getFullYear()));
@@ -152,6 +152,11 @@ ${footer}
     try { localStorage.setItem("theme", next); } catch (e) {}
   };
   document.getElementById("menuBtn").onclick = function () { document.getElementById("navLinks").classList.toggle("open"); };
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("[data-top]")) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
   var url = ${JSON.stringify(url)};
   document.getElementById("copyLink").onclick = function () {
     function done() { var t = document.getElementById("toast"); t.textContent = "Link copied"; t.classList.add("show"); setTimeout(function () { t.classList.remove("show"); }, 3000); }
