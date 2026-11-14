@@ -290,17 +290,44 @@
   .toast.show { transform: translateX(-50%) translateY(0); }
 
   /* ============ CHAT ASSISTANT ============ */
+  .ava-av { display: block; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: #e0e7ff; }
+  .ava-av svg { display: block; width: 100%; height: 100%; }
   .chat-launch { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 18px 12px 14px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: .95rem;
+    padding: 6px 20px 6px 6px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 1rem;
     color: #fff; background: linear-gradient(135deg, #2563eb, #0b2e6f); box-shadow: 0 10px 30px rgba(11,46,111,.35); }
   .chat-launch:hover { filter: brightness(1.08); }
-  .chat-launch svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .chat-launch .ava-av { width: 46px; height: 46px; border: 2px solid #fff; }
+  .chat-launch::after { content: ""; position: absolute; inset: -4px; border-radius: 999px; border: 3px solid #a78bfa; opacity: 0; pointer-events: none; }
+  .chat-launch.pop { animation: ava-pop .7s cubic-bezier(.2,1.4,.4,1) both; }
+  .chat-launch.pop .ava-av { animation: ava-wiggle 1.2s ease-in-out .7s 2; transform-origin: 50% 90%; }
+  .chat-launch.pop::after { animation: ava-pulse 1.8s ease-out .9s 3; }
+  @keyframes ava-pop { 0% { transform: scale(.3) translateY(30px); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); } }
+  @keyframes ava-wiggle { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-12deg); } 40% { transform: rotate(10deg); } 60% { transform: rotate(-6deg); } 80% { transform: rotate(4deg); } }
+  @keyframes ava-pulse { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.25); } }
+  .ava-greet { position: fixed; right: 20px; bottom: 92px; z-index: 91; width: 300px; display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 14px 14px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 18px 18px 6px 18px;
+    box-shadow: 0 18px 44px rgba(15,31,58,.22); cursor: pointer; animation: ava-greet-in .5s cubic-bezier(.2,1.2,.4,1) both; }
+  .ava-greet[hidden] { display: none; }
+  .ava-greet.out { animation: ava-greet-out .3s ease-in both; }
+  @keyframes ava-greet-in { from { opacity: 0; transform: translateY(16px) scale(.92); } to { opacity: 1; transform: none; } }
+  @keyframes ava-greet-out { to { opacity: 0; transform: translateY(10px) scale(.96); } }
+  .ava-greet .ava-av { width: 44px; height: 44px; }
+  .ava-greet b { display: block; font-family: "Plus Jakarta Sans", sans-serif; font-size: 1.02rem; margin-bottom: 3px; }
+  .ava-greet p { font-size: .88rem; color: var(--muted); line-height: 1.45; margin: 0 0 10px; min-height: 2.6em; }
+  .ava-greet .go { font: inherit; font-size: .85rem; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 0; background: var(--accent); color: var(--on-accent); cursor: pointer; }
+  .ava-greet .x { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: .85rem; }
+  .ava-greet .x:hover { background: var(--surface-2); }
+  .wave { display: inline-block; transform-origin: 70% 80%; animation: ava-hand 1.6s ease-in-out .4s 2; }
+  @keyframes ava-hand { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(16deg); } 20%, 40% { transform: rotate(-8deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .chat-launch.pop, .chat-launch.pop .ava-av, .chat-launch.pop::after, .ava-greet, .ava-greet.out, .wave { animation: none !important; }
+  }
   .chat-launch[hidden], .chat-panel[hidden] { display: none; }
   .chat-panel { position: fixed; right: 20px; bottom: 20px; z-index: 95; width: 390px; height: min(620px, calc(100vh - 40px));
     display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
     box-shadow: 0 24px 60px rgba(15,31,58,.28); overflow: hidden; }
   .chat-head { display: flex; align-items: center; gap: 12px; padding: 14px 14px 14px 16px; color: #fff; background: linear-gradient(135deg, #1d4ed8, #0b2e6f); }
-  .chat-head .mark { width: 36px; height: 36px; border-radius: 9px; background: #fff; color: #1d4ed8; display: grid; place-items: center; font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: .9rem; flex-shrink: 0; }
+  .chat-head .ava-av { width: 42px; height: 42px; border: 2px solid rgba(255,255,255,.85); }
   .chat-head b { display: block; font-family: "Plus Jakarta Sans", sans-serif; font-size: 1rem; }
   .chat-head small { display: block; opacity: .85; font-size: .78rem; }
   .chat-head .x { margin-left: auto; width: 34px; height: 34px; border-radius: 8px; border: 0; background: rgba(255,255,255,.15); color: #fff; cursor: pointer; font-size: 1.1rem; }
@@ -327,8 +354,10 @@
   .chat-foot { padding: 0 14px 12px; background: var(--surface); font-size: .74rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
   .chat-foot a { font-weight: 600; }
   @media (max-width: 520px) {
-    .chat-launch span { display: none; }
-    .chat-launch { padding: 14px; }
+    .chat-launch .label { display: none; }
+    .chat-launch { padding: 5px; }
+    .chat-launch .ava-av { width: 52px; height: 52px; }
+    .ava-greet { right: 12px; left: 12px; width: auto; bottom: 84px; }
     .chat-panel { right: 8px; left: 8px; bottom: 8px; width: auto; height: calc(100vh - 16px); height: calc(100dvh - 16px); }
   }
 </style>
@@ -592,15 +621,24 @@
   <button class="icon-btn lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
 </div>
 
-<!-- Chat assistant (shown when CHAT_API is set) -->
-<button class="chat-launch" id="chatLaunch" type="button" aria-label="Ask my AI assistant" hidden>
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>
-  <span>Ask about me</span>
+<!-- Chat assistant Ava (shown when CHAT_API is set) -->
+<div class="ava-greet" id="avaGreet" role="status" hidden>
+  <button class="x" id="avaGreetClose" type="button" aria-label="Dismiss">✕</button>
+  <span class="ava-av" data-ava></span>
+  <div>
+    <b>Hi, I'm Ava <span class="wave">👋</span></b>
+    <p id="avaGreetText"></p>
+    <button class="go" type="button">Chat with me</button>
+  </div>
+</div>
+<button class="chat-launch" id="chatLaunch" type="button" aria-label="Chat with Ava, Rama's AI assistant" hidden>
+  <span class="ava-av" data-ava></span>
+  <span class="label">Ask Ava</span>
 </button>
-<section class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat with Rama's AI assistant" hidden>
+<section class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat with Ava, Rama's AI assistant" hidden>
   <div class="chat-head">
-    <div class="mark">RS</div>
-    <div><b>Ask about Rama</b><small>AI assistant · answers from this website</small></div>
+    <span class="ava-av" data-ava></span>
+    <div><b>Ava</b><small>Rama's AI assistant · answers from this website</small></div>
     <button class="x" id="chatClose" type="button" aria-label="Close chat">✕</button>
   </div>
   <div class="chat-log" id="chatLog" aria-live="polite"></div>
@@ -626,6 +664,21 @@ const CONTACT_EMAIL = "rk@rksasikumar.com";
 
 // Chat assistant: the address of the Cloudflare Worker (worker/ folder). Leave empty to hide the chat button.
 const CHAT_API = "https://rksasikumar-chat.ramakrishnann1404.workers.dev/chat";
+// Ava's look: "headset", "robot", "sparkle" or "monogram"
+const AVA_STYLE = "headset";
+const AVA_AVATARS = {
+  // A: friendly professional with a headset
+  headset: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="avaA-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4b5fd"/><stop offset="1" stop-color="#3b82f6"/></linearGradient><clipPath id="avaA-c"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#avaA-c)"><rect width="100" height="100" fill="url(#avaA-bg)"/><path d="M24 54C22 29 36 16 50 16s28 13 26 38c0 12-4 22-8 26H32c-4-4-8-14-8-26z" fill="#2b1d16"/><path d="M16 104c2-22 18-32 34-32s32 10 34 32z" fill="#1e3a8a"/><path d="M42 73l8 13 8-13z" fill="#fff"/><rect x="44" y="58" width="12" height="16" rx="5" fill="#b97a50"/><ellipse cx="50" cy="46" rx="17" ry="20" fill="#c68a5e"/><path d="M33 42c0-14 11-20 21-18 9 2 15 9 14 19-7-8-17-11-27-6-4 2-6 4-8 5z" fill="#2b1d16"/><path d="M39.5 41.3q3.5-2.2 7 0M53.5 41.3q3.5-2.2 7 0" stroke="#2b1d16" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="43" cy="47.5" rx="2.3" ry="2.7" fill="#1f1310"/><ellipse cx="57" cy="47.5" rx="2.3" ry="2.7" fill="#1f1310"/><circle cx="43.8" cy="46.6" r=".8" fill="#fff"/><circle cx="57.8" cy="46.6" r=".8" fill="#fff"/><path d="M40.5 45.2l-1.3-1.3M59.5 45.2l1.3-1.3" stroke="#1f1310" stroke-width="1.1" stroke-linecap="round"/><path d="M50 49.5q-1.6 3 .6 4" stroke="#a8673f" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="40" cy="54" r="3.3" fill="#f472b6" opacity=".35"/><circle cx="60" cy="54" r="3.3" fill="#f472b6" opacity=".35"/><path d="M44.5 56.5q5.5 5 11 0q-5.5 2.2-11 0z" fill="#be185d"/><path d="M30 45c0-23 40-23 40 0" stroke="#f1f5f9" stroke-width="3.5" fill="none"/><rect x="26" y="40" width="7.5" height="12.5" rx="3.5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/><rect x="66.5" y="40" width="7.5" height="12.5" rx="3.5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/><path d="M30 52c1 8 7 11 13 11" stroke="#f1f5f9" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="44" cy="63" r="2.4" fill="#f472b6"/><path d="M82 14l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#fde68a"/></g></svg>`,
+
+  // B: the Ava robot from the movie-ticket blog, with a bow
+  robot: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="avaB-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe4e6"/><stop offset="1" stop-color="#f9a8d4"/></linearGradient><clipPath id="avaB-c"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#avaB-c)"><rect width="100" height="100" fill="url(#avaB-bg)"/><rect x="30" y="76" width="40" height="32" rx="14" fill="#d97757"/><path d="M60 31v-9" stroke="#c86446" stroke-width="3" stroke-linecap="round"/><path d="M60 9l2.4 5.6 5.6 2.4-5.6 2.4-2.4 5.6-2.4-5.6-5.6-2.4 5.6-2.4z" fill="#fbbf24"/><rect x="22" y="30" width="56" height="46" rx="19" fill="#e07a5f"/><rect x="29.5" y="38" width="41" height="30" rx="13" fill="#2b1a14"/><path d="M38 53q4.5-5.5 9 0M53 53q4.5-5.5 9 0" stroke="#ffd7b8" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M37 49.5l-1.8-1.6M63 49.5l1.8-1.6" stroke="#ffd7b8" stroke-width="1.6" stroke-linecap="round"/><circle cx="37.5" cy="60" r="3.2" fill="#f472b6" opacity=".8"/><circle cx="62.5" cy="60" r="3.2" fill="#f472b6" opacity=".8"/><path d="M45 60q5 4.5 10 0" stroke="#ffd7b8" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M33 31l-11-8 1.5 15z" fill="#ec4899"/><path d="M33 31l11-8-1.5 15z" fill="#ec4899"/><circle cx="33" cy="31" r="3.6" fill="#be185d"/></g></svg>`,
+
+  // C: cute blob with sparkles
+  sparkle: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="avaC-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><circle cx="50" cy="50" r="50" fill="url(#avaC-bg)"/><path d="M50 26c18 0 30 12 30 29S68 82 50 82 20 72 20 55s12-29 30-29z" fill="#fff"/><path d="M40 28c2-9 10-12 14-8-6 0-10 4-11 9z" fill="#fff"/><ellipse cx="40.5" cy="53" rx="4.2" ry="5.6" fill="#312e81"/><ellipse cx="59.5" cy="53" rx="4.2" ry="5.6" fill="#312e81"/><circle cx="42" cy="51" r="1.5" fill="#fff"/><circle cx="61" cy="51" r="1.5" fill="#fff"/><path d="M36 47l-2-2M64 47l2-2" stroke="#312e81" stroke-width="1.6" stroke-linecap="round"/><circle cx="34" cy="63" r="4" fill="#f9a8d4"/><circle cx="66" cy="63" r="4" fill="#f9a8d4"/><path d="M45.5 63q4.5 4.5 9 0" stroke="#312e81" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M76 14l2.6 6.4 6.4 2.6-6.4 2.6-2.6 6.4-2.6-6.4-6.4-2.6 6.4-2.6z" fill="#fde68a"/><path d="M22 16l1.5 3.5 3.5 1.5-3.5 1.5-1.5 3.5-1.5-3.5-3.5-1.5 3.5-1.5z" fill="#fff" opacity=".9"/></svg>`,
+
+  // D: "Ava" monogram with a sparkle
+  monogram: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="avaD-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs><circle cx="50" cy="50" r="50" fill="url(#avaD-bg)"/><text x="50" y="64" text-anchor="middle" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="34" font-weight="800" fill="#fff" letter-spacing="-1">Ava</text><path d="M73 22l2.4 5.6 5.6 2.4-5.6 2.4-2.4 5.6-2.4-5.6-5.6-2.4 5.6-2.4z" fill="#fde68a"/></svg>`,
+};
 const CHAT_SUGGESTIONS = [
   "Summarise his experience",
   "What MuleSoft and Salesforce work has he done?",
@@ -1189,7 +1242,33 @@ $("#contactForm").onsubmit = e => {
   let history = [];
   try { history = JSON.parse(sessionStorage.getItem(KEY) || "[]"); } catch { history = []; }
   let busy = false;
+  const avatar = AVA_AVATARS[AVA_STYLE] || AVA_AVATARS.headset;
+  $$("[data-ava]").forEach(el => el.innerHTML = avatar);
   launch.hidden = false;
+  launch.classList.add("pop");
+
+  // Greeting: once per visit, a few seconds after arriving
+  const greet = $("#avaGreet"), greetText = $("#avaGreetText");
+  const GREETING = "I'm Rama's AI assistant. Ask me about his experience, projects or how to reach him!";
+  let greetTimer;
+  function hideGreet() {
+    if (greet.hidden) return;
+    clearTimeout(greetTimer);
+    greet.classList.add("out");
+    setTimeout(() => { greet.hidden = true; greet.classList.remove("out"); }, 300);
+  }
+  let greeted = false;
+  try { greeted = sessionStorage.getItem("ava-greeted") === "1"; } catch {}
+  if (!greeted) setTimeout(() => {
+    if (!panel.hidden) return;
+    try { sessionStorage.setItem("ava-greeted", "1"); } catch {}
+    greet.hidden = false;
+    greetText.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+    setTimeout(() => { greetText.textContent = GREETING; }, 1100);
+    greetTimer = setTimeout(hideGreet, 14000);
+  }, 2500);
+  greet.addEventListener("mouseenter", () => clearTimeout(greetTimer));
+  greet.addEventListener("click", e => { if (e.target.closest("#avaGreetClose")) { e.stopPropagation(); hideGreet(); return; } hideGreet(); open(); });
 
   // Safe, minimal formatting: **bold**, [text](url) for this site and contact links, "- " bullets
   const safeUrl = u => /^(https:\/\/(www\.)?rksasikumar\.com\/|\/|mailto:|https:\/\/wa\.me\/|https:\/\/(www\.)?linkedin\.com\/)/.test(u) ? u : null;
@@ -1231,12 +1310,12 @@ $("#contactForm").onsubmit = e => {
   }
   function render() {
     log.innerHTML = "";
-    bubble("assistant", "Hi! I'm Rama's AI assistant. Ask me about his experience, projects, certifications or how to get in touch.");
+    bubble("assistant", "Hi, I'm **Ava** 👋, Rama's AI assistant. Ask me about his experience, projects, certifications or how to get in touch.");
     history.forEach(m => bubble(m.role, m.content));
     if (!history.length) chips();
   }
   function save() { try { sessionStorage.setItem(KEY, JSON.stringify(history.slice(-16))); } catch {} }
-  function open() { panel.hidden = false; launch.hidden = true; render(); setTimeout(() => input.focus(), 50); }
+  function open() { greet.hidden = true; panel.hidden = false; launch.hidden = true; render(); setTimeout(() => input.focus(), 50); }
   function close() { panel.hidden = true; launch.hidden = false; launch.focus(); }
   launch.onclick = open;
   $("#chatClose").onclick = close;
