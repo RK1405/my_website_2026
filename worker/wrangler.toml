@@ -9,7 +9,7 @@ workers_dev = true
 
 [vars]
 # Claude model. claude-opus-5-5 gives the best answers; claude-haiku-5-5 costs about 40x less.
-MODEL = "claude-opus-5-5"
+MODEL = "claude-haiku-5-5"
 # Thinking effort for answers (low | medium | high). Low suits short Q&A.
 EFFORT = "low"
 # Only these sites may use the assistant.
