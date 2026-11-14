@@ -1210,6 +1210,13 @@ $("#contactForm").onsubmit = e => {
     if (inList) html += "</ul>";
     return html.replace(/(<br>)+$/, "");
   }
+  // While an answer streams in, hold back a markdown link until it has fully arrived
+  function hidePartialLink(text) {
+    const i = text.lastIndexOf("[");
+    if (i < 0) return text;
+    const tail = text.slice(i);
+    return /^\[[^\]]*\]\([^)\s]*\)/.test(tail) || !/^\[[^\]\n]*(\]\(?[^)\s]*)?$/.test(tail) ? text : text.slice(0, i);
+  }
   function bubble(role, text, extra = "") {
     const el = document.createElement("div");
     el.className = `msg ${role === "user" ? "me" : "bot"} ${extra}`;
@@ -1262,13 +1269,14 @@ $("#contactForm").onsubmit = e => {
           const line = buf.slice(0, cut).trim(); buf = buf.slice(cut + 2);
           if (!line.startsWith("data:")) continue;
           let ev; try { ev = JSON.parse(line.slice(5)); } catch { continue; }
-          if (ev.t) { answer += ev.t; out.innerHTML = format(answer); log.scrollTop = log.scrollHeight; }
+          if (ev.t) { answer += ev.t; out.innerHTML = format(hidePartialLink(answer)); log.scrollTop = log.scrollHeight; }
           if (ev.error) failed = ev.error;
         }
       }
       if (failed && !answer) throw new Error(failed);
       if (!answer) throw new Error("Sorry, I couldn't answer just now. Please try again, or contact Rama directly.");
       history.push({ role: "assistant", content: answer });
+      out.innerHTML = format(answer);
     } catch (err) {
       history.pop(); // drop the unanswered question so the conversation stays valid
       out.classList.add("err");
