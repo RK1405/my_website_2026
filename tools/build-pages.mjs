@@ -67,6 +67,18 @@ const block = x => {
 };
 const HUE = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 };
 
+// Up to three related posts: same category first, then shared technologies
+function relatedHtml(b) {
+  const tech = new Set((b.tech || []).map(t => t.toLowerCase()));
+  const scored = posts.filter(p => p !== b).map(p => ({
+    p,
+    score: (p.category === b.category ? 3 : 0) + (p.tech || []).filter(t => tech.has(t.toLowerCase())).length,
+  })).filter(x => x.score > 0).sort((x, y) => y.score - x.score || y.p.start.localeCompare(x.p.start)).slice(0, 3);
+  if (!scored.length) return "";
+  return `<section class="related"><h2>Related posts</h2><div class="related-list">${scored.map(({ p }) =>
+    `<a class="card related-item" href="${p.slug}.html">${p.image ? `<img src="../${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" decoding="async">` : ""}<span><small>${esc(p.category)} · ${esc(p.period)}</small>${esc(p.title)}</span></a>`).join("")}</div></section>`;
+}
+
 function postPage(b, newer, older) {
   const url = `${SITE_URL}/blog/${b.slug}.html`;
   const image = `${SITE_URL}/${b.image || "images/social-card.jpg"}`;
@@ -74,7 +86,7 @@ function postPage(b, newer, older) {
   const hue = HUE[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
   const cover = b.image
-    ? `<img class="hero-img" src="../${esc(b.image)}" alt="${esc(b.title)}">${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
+    ? `<img class="hero-img" src="../${esc(b.image)}" alt="${esc(b.title)}" fetchpriority="high">${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
     : ph;
   const story = b.challenge
     ? `<h2>The challenge</h2><p>${esc(b.challenge)}</p>
@@ -86,7 +98,7 @@ function postPage(b, newer, older) {
     "@context": "https://schema.org", "@type": "BlogPosting",
     headline: b.title, description: b.summary, image, url,
     datePublished: b.start.length === 7 ? b.start + "-01" : b.start,
-    author: { "@type": "Person", name: siteName, url: SITE_URL + "/" }
+    author: { "@type": "Person", "@id": SITE_URL + "/#person", name: siteName, url: SITE_URL + "/" }
   };
   return `<!DOCTYPE html>
 <html lang="en">
@@ -113,6 +125,17 @@ ${fonts}
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=2" />
 <meta name="theme-color" content="#0b2e6f" />
 ${style}
+<style>
+  .related { margin-top: 36px; }
+  .related h2 { font-size: 1.2rem; margin: 0 0 14px; color: var(--text); }
+  .related-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .related-item { display: flex; flex-direction: column; overflow: hidden; color: var(--text); font-weight: 600; font-size: .92rem; line-height: 1.4; }
+  .related-item:hover { border-color: var(--accent); text-decoration: none; }
+  .related-item img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+  .related-item span { padding: 12px 14px 14px; }
+  .related-item small { display: block; color: var(--accent); font-weight: 600; font-size: .76rem; margin-bottom: 4px; }
+  @media (max-width: 700px) { .related-list { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 ${header}
@@ -133,6 +156,7 @@ ${header}
       <a href="https://wa.me/?text=${t}%20${l}" target="_blank" rel="noopener">💬 WhatsApp</a>
       <a href="mailto:?subject=${t}&body=${t}%0A${l}">✉️ Email</a>
     </div>
+    ${relatedHtml(b)}
     <nav class="post-nav">
       ${newer ? `<a class="card" href="${newer.slug}.html"><small>← Newer post</small>${esc(newer.title)}</a>` : ""}
       ${older ? `<a class="card next" href="${older.slug}.html"><small>Older post →</small>${esc(older.title)}</a>` : ""}
@@ -231,6 +255,24 @@ const urls = [`${SITE_URL}/`, ...SECTIONS.map(s => `${SITE_URL}/${s}/`), ...post
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(u => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n") + `\n</urlset>\n`);
+// llms.txt: a short guide to this site for AI search tools
+fs.writeFileSync(path.join(OUT, "llms.txt"), [
+  `# ${siteName}`,
+  "",
+  `> ${homeDescription}`,
+  "",
+  "Personal website of Ramakrishnann Sasikumar: experience, case studies from MuleSoft, Salesforce and ERP programmes, and writing on AI agents in delivery. Contact: rk@rksasikumar.com.",
+  "",
+  "## Pages",
+  `- [Home](${SITE_URL}/): overview and headline achievements`,
+  ...SECTIONS.map(s => `- [${PAGE_META[s].title}](${SITE_URL}/${s}/): ${PAGE_META[s].description}`),
+  `- [Résumé (PDF)](${SITE_URL}/resume.pdf)`,
+  "",
+  "## Blog posts",
+  ...posts.map(b => `- [${b.title}](${SITE_URL}/blog/${b.slug}.html): ${b.summary}`),
+  "",
+].join("\n"));
+
 // Knowledge for the chat assistant (read live by the Worker in worker/)
 fs.writeFileSync(path.join(OUT, "chat-knowledge.txt"), buildKnowledge(html));
 fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);

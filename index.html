@@ -12,6 +12,107 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=2" />
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=2" />
 <meta name="theme-color" content="#0b2e6f" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Person",
+   "@id": "https://rksasikumar.com/#person",
+   "name": "Ramakrishnann Sasikumar",
+   "alternateName": [
+    "Rama",
+    "RK Sasikumar"
+   ],
+   "url": "https://rksasikumar.com/",
+   "image": "https://rksasikumar.com/images/me.jpg",
+   "email": "mailto:rk@rksasikumar.com",
+   "jobTitle": "Program Manager · MuleSoft, Salesforce & ERP",
+   "description": "PMP and CSM certified Program Manager with 10+ years of delivery, specialising in MuleSoft, Salesforce and ERP programmes. Directs a USD 20M integration portfolio at NTT DATA.",
+   "worksFor": {
+    "@type": "Organization",
+    "name": "NTT DATA"
+   },
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Chennai",
+    "addressCountry": "IN"
+   },
+   "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Anna University"
+   },
+   "knowsAbout": [
+    "Programme and portfolio management",
+    "MuleSoft",
+    "API-led connectivity",
+    "Salesforce Sales Cloud",
+    "Salesforce Service Cloud",
+    "SAP integration",
+    "Oracle Cloud",
+    "Microsoft Dynamics 365 Business Central",
+    "ERP modernisation",
+    "Agile",
+    "Scrum",
+    "SAFe",
+    "Generative AI",
+    "AI agents"
+   ],
+   "hasCredential": [
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Project Management Professional (PMP)",
+     "recognizedBy": {
+      "@type": "Organization",
+      "name": "Project Management Institute"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Certified ScrumMaster (CSM)",
+     "recognizedBy": {
+      "@type": "Organization",
+      "name": "Scrum Alliance"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Salesforce Certified Platform Administrator",
+     "recognizedBy": {
+      "@type": "Organization",
+      "name": "Salesforce"
+     }
+    },
+    {
+     "@type": "EducationalOccupationalCredential",
+     "name": "Salesforce Certified MuleSoft Integration Associate",
+     "recognizedBy": {
+      "@type": "Organization",
+      "name": "Salesforce"
+     }
+    }
+   ],
+   "award": [
+    "India Delivery Excellence Award (Delivery Execution), NTT DATA, FY25",
+    "Best People Manager, NTT DATA, Q4 2025",
+    "Best Technical Paper, NTT DATA, 2025"
+   ],
+   "sameAs": [
+    "https://www.linkedin.com/in/ramakrishnann-sasikumar-1301ab240"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://rksasikumar.com/#website",
+   "url": "https://rksasikumar.com/",
+   "name": "Ramakrishnann Sasikumar",
+   "author": {
+    "@id": "https://rksasikumar.com/#person"
+   }
+  }
+ ]
+}
+</script>
 <style>
   /* ============ THEME TOKENS (blue & white) ============ */
   :root {
@@ -400,7 +501,7 @@
         </div>
       </div>
       <aside class="profile">
-        <div class="photo"><img src="images/me.jpg" alt="Ramakrishnann Sasikumar" onerror="this.parentNode.classList.add('nophoto');this.remove()"><span>RS</span></div>
+        <div class="photo"><img src="images/me.jpg" alt="Ramakrishnann Sasikumar, Program Manager" fetchpriority="high" onerror="this.parentNode.classList.add('nophoto');this.remove()"><span>RS</span></div>
         <h3>Delivery Lead Consultant, NTT DATA</h3>
         <div class="loc">📍 Chennai, India</div>
         <ul>
@@ -1199,7 +1300,7 @@ function renderPosts() {
     const hue = COVER_HUE[b.category] ?? 221;
     const ph = `<div class="cover-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
     const cover = b.image
-      ? `<img src="${esc(b.image)}" alt="" loading="lazy" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`
+      ? `<img src="${esc(b.image)}" alt="${esc(b.title)}" loading="lazy" decoding="async" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`
       : ph;
     return `
       <a class="card post" href="${postHref(b.slug)}" style="color:inherit;text-decoration:none">
@@ -1236,7 +1337,7 @@ function renderArticle(b) {
   const hue = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 }[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
   const cover = b.image
-    ? `<img class="hero-img" src="${esc(b.image)}" alt="" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
+    ? `<img class="hero-img" src="${esc(b.image)}" alt="${esc(b.title)}" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
     : ph;
   const story = b.challenge ? `
     <h2>The challenge</h2><p>${esc(b.challenge)}</p>
@@ -1276,7 +1377,7 @@ function galleryMedia(g, big) {
   const style = `background:linear-gradient(135deg,hsl(${g.hue} 75% 52%),hsl(${g.hue + 15} 80% 28%));` + (big ? "" : `aspect-ratio:1/${g.h || 1};`);
   const ph = `<div class="ph" style="${style}">${g.emoji || "🖼️"}</div>`;
   if (!g.src) return ph;
-  return `<img src="${esc(g.src)}" alt="${esc(g.caption)}" loading="lazy" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`;
+  return `<img src="${esc(g.src)}" alt="${esc(g.caption)}" loading="lazy" decoding="async" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>`;
 }
 const galItem = (g, i) => `<figure class="g-item ${g.group === "certs" ? "cert" : ""}" data-i="${i}"><div class="g-media">${galleryMedia(g)}</div><figcaption>${esc(g.caption)}</figcaption></figure>`;
 $("#galMoments").innerHTML = GALLERY.map((g, i) => g.group === "certs" ? "" : galItem(g, i)).join("");
