@@ -1,9 +1,10 @@
 # Cloudflare Worker that powers the chat assistant on rksasikumar.com.
-# Deployed automatically by .github/workflows/deploy-chat.yml.
+# Deployed by pasting dist/rksasikumar-chat.js into the Cloudflare dashboard (see README),
+# or with `npx wrangler deploy` if you set up a Cloudflare API token later.
+# The settings below are optional: src/index.js has the same defaults built in.
 name = "rksasikumar-chat"
 main = "src/index.js"
 compatibility_date = "2026-10-01"
-compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 [vars]

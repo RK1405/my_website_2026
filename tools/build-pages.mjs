@@ -13,6 +13,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { buildKnowledge } from "./build-knowledge.mjs";
 
 const SITE_URL = "https://rksasikumar.com";
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
@@ -225,6 +226,8 @@ const urls = [`${SITE_URL}/`, ...SECTIONS.map(s => `${SITE_URL}/${s}/`), ...post
 fs.writeFileSync(path.join(OUT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   urls.map(u => `  <url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n") + `\n</urlset>\n`);
+// Knowledge for the chat assistant (read live by the Worker in worker/)
+fs.writeFileSync(path.join(OUT, "chat-knowledge.txt"), buildKnowledge(html));
 fs.writeFileSync(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 console.log(`Built ${posts.length} blog pages, sitemap.xml and robots.txt into ${path.relative(ROOT, OUT) || "."}`);

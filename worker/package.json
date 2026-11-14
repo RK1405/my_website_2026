@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "bundle": "wrangler deploy --dry-run --minify --outdir .bundle && cp .bundle/index.js dist/rksasikumar-chat.js && rm -rf .bundle"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.8.0"

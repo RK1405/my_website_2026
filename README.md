@@ -24,11 +24,12 @@ The "Ask about me" chat is powered by Claude through a Cloudflare Worker in `wor
 
 - `worker/src/index.js`: the chat API (streams answers, checks requests, limits each visitor to 10 messages a minute, only answers on rksasikumar.com)
 - `worker/src/prompt.js`: the assistant's instructions and boundaries
-- `tools/build-knowledge.mjs`: builds the assistant's knowledge from `index.html` on every deploy
-- `worker/wrangler.toml`: model (`MODEL`), effort and allowed sites
-- `.github/workflows/deploy-chat.yml`: deploys the Worker when the site or Worker changes
+- `tools/build-knowledge.mjs`: turns the website content into `/chat-knowledge.txt`, published with the site; the Worker reads it live, so the assistant updates when the site does
+- `worker/dist/rksasikumar-chat.js`: the Worker as one file, ready to paste into the Cloudflare dashboard (rebuild with `npm run bundle` in `worker/` after changing `worker/src/`)
 
-Setup: add the repository secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `ANTHROPIC_API_KEY`, run the **Deploy chat assistant** workflow, then set `CHAT_API` in `index.html` to the Worker's `https://rksasikumar-chat.<subdomain>.workers.dev/chat` address.
+Setup (Cloudflare dashboard, no API token needed): create a Worker named `rksasikumar-chat`, replace its code with `worker/dist/rksasikumar-chat.js` and deploy, then add the secret `ANTHROPIC_API_KEY` under Settings → Variables and Secrets. Finally set `CHAT_API` in `index.html` to `https://rksasikumar-chat.<subdomain>.workers.dev/chat`.
+
+Optional Worker variables (defaults built in): `MODEL` (default `claude-opus-5-5`; `claude-haiku-5-5` costs about 40x less), `EFFORT` (`low`), `ALLOWED_ORIGINS`, `KNOWLEDGE_URL`.
 
 ## Image credits
 Blog cover photos are from [Unsplash](https://unsplash.com) and used under the [Unsplash License](https://unsplash.com/license).
