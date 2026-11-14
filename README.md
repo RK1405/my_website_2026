@@ -27,7 +27,9 @@ The "Ask about me" chat is powered by Claude through a Cloudflare Worker in `wor
 - `tools/build-knowledge.mjs`: turns the website content into `/chat-knowledge.txt`, published with the site; the Worker reads it live, so the assistant updates when the site does
 - `worker/dist/rksasikumar-chat.js`: the Worker as one file, ready to paste into the Cloudflare dashboard (rebuild with `npm run bundle` in `worker/` after changing `worker/src/`)
 
-Setup (Cloudflare dashboard, no API token needed): create a Worker named `rksasikumar-chat`, replace its code with `worker/dist/rksasikumar-chat.js` and deploy, then add the secret `ANTHROPIC_API_KEY` under Settings → Variables and Secrets. Finally set `CHAT_API` in `index.html` to `https://rksasikumar-chat.<subdomain>.workers.dev/chat`.
+Setup, automatic: add the repository secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `ANTHROPIC_API_KEY`, then run the **Deploy chat assistant** workflow (it also runs when `worker/` changes).
+
+Setup, manual (Cloudflare dashboard, no API token needed): create a Worker named `rksasikumar-chat`, replace its code with `worker/dist/rksasikumar-chat.js` and deploy, then add the secret `ANTHROPIC_API_KEY` under Settings → Variables and Secrets. Finally set `CHAT_API` in `index.html` to `https://rksasikumar-chat.<subdomain>.workers.dev/chat`.
 
 Optional Worker variables (defaults built in): `MODEL` (default `claude-opus-5-5`; `claude-haiku-5-5` costs about 40x less), `EFFORT` (`low`), `ALLOWED_ORIGINS`, `KNOWLEDGE_URL`.
 
