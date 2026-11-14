@@ -1,0 +1,27 @@
+# Cloudflare Worker that powers the chat assistant on rksasikumar.com.
+# Deployed automatically by .github/workflows/deploy-chat.yml.
+name = "rksasikumar-chat"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+# Claude model. claude-opus-5-5 gives the best answers; claude-haiku-5-5 costs about 40x less.
+MODEL = "claude-opus-5-5"
+# Thinking effort for answers (low | medium | high). Low suits short Q&A.
+EFFORT = "low"
+# Only these sites may use the assistant.
+ALLOWED_ORIGINS = "https://rksasikumar.com,https://www.rksasikumar.com"
+
+# Per-visitor limit: 10 messages a minute.
+[[ratelimits]]
+name = "CHAT_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+[observability]
+enabled = true

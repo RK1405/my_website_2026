@@ -19,5 +19,16 @@ You only edit `index.html`. On every push, GitHub Actions runs `node tools/build
 
 Each post needs a unique `slug` (lowercase words joined by hyphens). Don't change a slug once the post has been shared.
 
+## Chat assistant
+The "Ask about me" chat is powered by Claude through a Cloudflare Worker in `worker/`, which keeps the API key private.
+
+- `worker/src/index.js`: the chat API (streams answers, checks requests, limits each visitor to 10 messages a minute, only answers on rksasikumar.com)
+- `worker/src/prompt.js`: the assistant's instructions and boundaries
+- `tools/build-knowledge.mjs`: builds the assistant's knowledge from `index.html` on every deploy
+- `worker/wrangler.toml`: model (`MODEL`), effort and allowed sites
+- `.github/workflows/deploy-chat.yml`: deploys the Worker when the site or Worker changes
+
+Setup: add the repository secrets `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and `ANTHROPIC_API_KEY`, run the **Deploy chat assistant** workflow, then set `CHAT_API` in `index.html` to the Worker's `https://rksasikumar-chat.<subdomain>.workers.dev/chat` address.
+
 ## Image credits
 Blog cover photos are from [Unsplash](https://unsplash.com) and used under the [Unsplash License](https://unsplash.com/license).

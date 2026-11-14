@@ -1,0 +1,75 @@
+# Deploys the chat assistant (worker/) to Cloudflare whenever the site content or the
+# Worker changes, so the assistant always answers from the latest website content.
+#
+# Needs three repository secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   - Cloudflare API token with "Edit Cloudflare Workers" permission
+#   CLOUDFLARE_ACCOUNT_ID  - your Cloudflare account ID
+#   ANTHROPIC_API_KEY      - Claude API key from console.anthropic.com
+# Until they're added, this workflow skips the deploy and the site works without the chat.
+name: Deploy chat assistant
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - worker/**
+      - tools/build-knowledge.mjs
+      - .github/workflows/deploy-chat.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chat-worker
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secrets
+        id: check
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AI_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$CF_TOKEN" ] && [ -n "$CF_ACCOUNT" ] && [ -n "$AI_KEY" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Chat assistant not deployed: add CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID and ANTHROPIC_API_KEY repository secrets."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.ready == 'true'
+        with:
+          node-version: 20
+
+      - name: Build knowledge from the website
+        if: steps.check.outputs.ready == 'true'
+        run: node tools/build-knowledge.mjs
+
+      - name: Install Worker dependencies
+        if: steps.check.outputs.ready == 'true'
+        working-directory: worker
+        run: npm ci
+
+      - name: Deploy Worker
+        if: steps.check.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: worker
+          packageManager: npm
+          wranglerVersion: "4.162.0"
+          secrets: |
+            ANTHROPIC_API_KEY
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
