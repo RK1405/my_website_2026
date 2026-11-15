@@ -815,6 +815,78 @@ const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
 //       body: ["First paragraph...", "Second paragraph..."] },
 const BLOGS = [
   {
+    slug: "shadow-hunter-game",
+    title: "Shadow Hunter: I built a 100-level stealth game and Android app by describing it",
+    client: "Personal project · Game built with Claude Code",
+    period: "Nov 2026", start: "2026-11-15", category: "AI & Agents", tag: "Game development", icon: "🎮",
+    image: "images/blog-shadow-hunter.jpg", credit: "Illustration made for this post, with the game's app icon",
+    tech: ["Claude Code", "HTML5 game", "Procedural levels", "Android app", "Automated testing"],
+    summary: "A hooded thief, 100 nights of guarded vaults and a diamond to steal. I built Shadow Hunter, a stealth game that runs as an installable Android app, in one evening, without writing the code myself.",
+    result: "100 generated levels, a 77 KB offline Android app, built in an evening",
+    body: [
+      "Stealth games are all about tension: creeping past guards, hiding in shadows, holding your breath as a lantern swings your way. One evening I wondered: could I build one the same way I built this website, by describing it to an AI coding agent?",
+      "A couple of hours later I had Shadow Hunter on my phone, with its own app icon.",
+      { h: "Version 1: Shadow Quarter" },
+      "My first request was simple: a top-down stealth game I could play on my phone. Claude Code came back with a playable first version called Shadow Quarter:",
+      { list: [
+        "Three levels, from 2 guards up to 6, each harder than the last.",
+        "The goal on every level: steal the glowing treasure, then reach the exit.",
+        "Guards patrol or stand watch with a lantern. The cone of light is what they can see, and walls block it. A \"?\" means a guard is suspicious; a \"!\" means you've been spotted.",
+        "Dark foliage hides you, unless a guard is right next to you.",
+        "Sneak up behind a guard to knock him out, but other guards notice bodies and come searching.",
+        "Running is fast, but guards can hear your footsteps.",
+        "Each level ends with a rank: Ghost (never seen, no takedowns), Silent Blade (never seen) or Escaped."
+      ] },
+      "It worked on a phone with touch controls and on a computer with the keyboard. It was a real game, but small. So I wrote a wish list.",
+      { h: "Version 2: Shadow Hunter, eight requests" },
+      "My upgrade list read like a product backlog:",
+      { steps: [
+        "100 levels, which the game calls \"nights\".",
+        "A diamond locked in a vault, with a key carried by a guard every fifth night.",
+        "A proper thief as the hero.",
+        "Realistic guards instead of simple markers.",
+        "A short intro clip at the start of each night.",
+        "More places to hide.",
+        "A diamond that actually glimmers.",
+        "An alarm when the diamond is stolen."
+      ] },
+      { h: "100 nights without 100 hand-made maps" },
+      "The smartest decision wasn't mine. Instead of drawing 100 maps, which would all start to feel the same, Claude Code wrote a level generator. Every night gets its own arena, and the difficulty climbs steadily: Night 1 has 2 guards on a small map, while Night 100 has 12 guards on a map twice the size, with faster patrols, wider lantern cones and quicker detection.",
+      "Progress is saved, and the menu shows a grid of all 100 nights with a Continue button.",
+      { h: "One night in Shadow Hunter" },
+      { steps: [
+        "A short cinematic zooms in on the night's diamond, with its name and where it's kept (\"The Sunfire Crown, sealed in the temple vault\"), then pans to the thief emerging from a tunnel in the wall.",
+        "You sneak through the arena, hiding in bushes or ducking behind crates and barrels to break a guard's line of sight.",
+        "You reach the vault. On every fifth night the door is locked, and one guard carries the key, marked with a bobbing golden key. Strike him from behind to take it.",
+        "You grab the glittering diamond. From Night 6, that sets off a siren: the screen pulses red and every guard races to the vault.",
+        "You escape through your tunnel. From Night 20, one guard (two from Night 50) runs to block it, so you need to plan your escape before you grab the stone."
+      ] },
+      "The art is detailed hand-drawn 2D: a hooded thief with a swaying cape and animated legs, and armoured watchmen with helmets, red tabards, spears and swinging lanterns. Claude Code was upfront that photo-realistic art would need real art assets, which is a fair constraint to know before you start.",
+      { h: "Turning it into a real Android app" },
+      "Playing in a browser was fine, but I wanted it on my phone like any other game. So the last step was packaging it as an Android app:",
+      { list: [
+        "The whole game is bundled inside, so it works fully offline.",
+        "It runs fullscreen, keeps the screen awake while you play, and saves your progress on the phone.",
+        "It supports Android 7.0 and newer, which covers practically every phone in use today.",
+        "It's properly signed, so it installs cleanly and future versions install as updates.",
+        "The entire app is just 77 KB."
+      ] },
+      "Claude Code set up the Android build tools, designed the launcher icon (the hooded thief with the diamond emblem you can see above), rendered it at every size Android needs, and built and signed the app.",
+      { h: "Tested like real software" },
+      "Before handing anything over, the game was checked with automated tests: all 100 nights generate valid maps that can actually be completed, locked vaults stay locked until the key is taken, the alarm brings every guard to the vault, and escaping through the tunnel ends the night. That's 100 levels verified without me playing each one.",
+      { h: "What building a game taught me about delivery" },
+      { list: [
+        "A wish list is a backlog. My eight requests became eight clear features, each delivered and checked off.",
+        "Scale with systems, not effort. A generator beat 100 hand-made levels, the same way automation beats manual work in a programme.",
+        "Know your constraints early. Being told upfront that photo-realism needs real art saved time and expectations.",
+        "Test at scale. Automated checks across all 100 nights gave confidence no amount of manual play could.",
+        "Protect what matters. The app's signing key stays out of the code repository, because anyone holding it could publish fake updates."
+      ] },
+      "I didn't write the code myself, but I did make every product decision: what the game should feel like, what to build next, and when it was good enough to ship. That's the part of building software I've always done best, and AI tools now let me take it all the way to a finished app.",
+      "Ideas for the next version: distractions, like throwing stones to lure guards away, and a story that runs through the nights."
+    ]
+  },
+  {
     slug: "live-ai-chat-assistant",
     title: "Meet Ava: how I added a live AI chat assistant to my website",
     client: "Personal project · The website you're reading",
