@@ -632,85 +632,6 @@
     .marquee .track { animation: none; flex-wrap: wrap; width: auto; }
     .marquee { -webkit-mask-image: none; mask-image: none; }
   }
-
-  /* ============ V3.0 BENTO HOME ============ */
-  .bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; grid-auto-flow: dense; }
-  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 22px; box-shadow: var(--shadow); position: relative; overflow: hidden; color: var(--text); }
-  a.tile { text-decoration: none; display: block; }
-  a.tile:hover { text-decoration: none; }
-  .tile h3 { font-size: 1.08rem; margin-bottom: 6px; }
-  .tile p { color: var(--muted); font-size: .92rem; }
-  .tile .go { display: inline-block; margin-top: 10px; font-weight: 600; font-size: .9rem; color: var(--accent); }
-  .b-label { display: flex; align-items: center; gap: 8px; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
-  .b-intro, .b-photo { grid-row: span 3; }
-  .b-intro { grid-column: span 2; }
-  .b-intro.hero { display: flex; flex-direction: column; justify-content: center; align-items: stretch; min-height: 0; gap: 0; padding: 34px 36px; background: linear-gradient(160deg, color-mix(in srgb, var(--accent-soft) 70%, var(--surface)), var(--surface) 55%); }
-  .b-intro h1 { font-size: clamp(2rem, 3.6vw, 3rem); }
-  .b-intro p.intro { max-width: none; font-size: 1rem; margin-bottom: 24px; }
-  .b-photo { padding: 0; min-height: 420px; background: linear-gradient(150deg, #1d4ed8, #0b2e6f); border: 0; }
-  .b-photo .photo { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; }
-  .b-photo .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
-  .b-photo .photo span { display: none; font: 800 3rem "Plus Jakarta Sans", sans-serif; }
-  .b-photo .photo.nophoto span { display: block; }
-  .b-photo-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 60px 20px 18px; color: #fff; background: linear-gradient(transparent, rgba(8,20,45,.85)); display: grid; gap: 2px; }
-  .b-photo-cap b { font-family: "Plus Jakarta Sans", sans-serif; font-size: 1.02rem; }
-  .b-photo-cap span { font-size: .86rem; opacity: .85; }
-  .bento .stat { display: flex; flex-direction: column; justify-content: flex-end; padding: 22px; }
-  .bento .stat b { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.1; background: linear-gradient(100deg, var(--accent), var(--accent-3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .b-latest, .b-ava, .b-now { grid-column: span 2; }
-  a.tile.b-latest { padding: 0; display: grid; grid-template-columns: 1.15fr 1fr; min-height: 210px; }
-  .bl-media { position: relative; background: var(--surface-2); overflow: hidden; }
-  .bl-media video, .bl-media img, .bl-media .cover-ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: grid; place-items: center; font-size: 3rem; }
-  .bl-play { position: absolute; left: 12px; bottom: 12px; font-size: .74rem; font-weight: 700; color: #fff; background: rgba(8,20,45,.7); padding: 4px 10px; border-radius: 999px; }
-  .bl-body { padding: 22px; display: flex; flex-direction: column; justify-content: center; }
-  a.tile.b-latest:not(:has(.bl-media)) { grid-template-columns: 1fr; }
-  .bl-body h3 { font-size: 1.05rem; line-height: 1.35; }
-  .bl-meta { font-size: .82rem; color: var(--muted); }
-  .b-award { background: linear-gradient(160deg, #fff7e0, var(--surface) 70%); }
-  .b-award .trophy { font-size: 2rem; margin-bottom: 6px; }
-  .b-award small { display: block; margin-top: 8px; color: var(--muted); font-size: .8rem; }
-  .b-ava { display: flex; flex-direction: column; justify-content: center; gap: 14px; margin: 0; padding: 24px; background: linear-gradient(135deg, #1d4ed8, #4c1d95); border: 0; color: #fff; }
-  .b-ava[hidden] { display: none; }
-  .b-ava-top { display: flex; gap: 14px; align-items: center; }
-  .b-ava .ava-av { width: 56px; height: 56px; border: 2px solid rgba(255,255,255,.7); }
-  .b-ava h3 { color: #fff; }
-  .b-ava p { color: rgba(255,255,255,.82); }
-  .b-ava .ask-chips { margin: 0; }
-  .b-ava .ask-chips button { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); color: #fff; }
-  .b-ava .ask-chips button:hover { background: #fff; color: #1d4ed8; border-color: #fff; }
-  .b-glance ul, .b-now ul { list-style: none; display: grid; gap: 8px; font-size: .9rem; }
-  .b-glance li { display: flex; gap: 8px; }
-  .b-glance li::before { content: "✓"; color: var(--accent); font-weight: 700; }
-  .b-now li { padding-left: 14px; position: relative; color: var(--text); }
-  .b-now li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-  .b-now a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px; }
-  .b-now .now-dot { width: 8px; height: 8px; }
-  .b-services .ic { width: 42px; height: 42px; border-radius: 12px; background: var(--accent-soft); display: grid; place-items: center; margin-bottom: 12px; }
-  .b-services .ic svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .b-certs .chips { gap: 6px; }
-  .b-open p { color: var(--text); margin-bottom: 4px; }
-  .b-open b { color: var(--accent-2); }
-  .b-platforms { grid-column: 1 / -1; margin: 0; padding: 18px 22px; }
-  #home h2.sub { margin-top: 56px; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .b-award { background: linear-gradient(160deg, #2a2410, var(--surface) 70%); } }
-  :root[data-theme="dark"] .b-award { background: linear-gradient(160deg, #2a2410, var(--surface) 70%); }
-  @media (max-width: 1000px) {
-    .bento { grid-template-columns: repeat(2, 1fr); }
-    .b-intro { grid-row: auto; }
-    .b-photo { grid-row: span 2; min-height: 340px; }
-    .b-open { grid-column: span 2; }
-  }
-  @media (max-width: 600px) {
-    .bento { gap: 12px; }
-    .b-intro.hero { padding: 26px 22px; }
-    .b-photo { grid-column: span 2; grid-row: auto; min-height: 0; aspect-ratio: 4 / 4.3; }
-    a.tile.b-latest { grid-template-columns: 1fr; }
-    .b-open { grid-column: span 1; }
-    .bl-media { aspect-ratio: 16 / 9; }
-    .b-award, .b-glance, .b-certs { grid-column: span 2; }
-    .tile { padding: 18px; }
-    .bento .stat { padding: 18px; }
-  }
 </style>
 </head>
 <body>
@@ -739,9 +660,11 @@
 
   <!-- ===================== HOME ===================== -->
   <section class="page" id="home">
-    <div class="bento">
-      <div class="tile b-intro hero">
-        <div class="badges"><span class="badge">PMP · CSM</span><span class="badge">10+ years in delivery</span></div>
+    <div class="hero">
+      <div>
+        <div class="badges">
+          <span class="badge">PMP · CSM</span>
+        </div>
         <h1>Hi, I'm <span>Ramakrishnann Sasikumar</span></h1>
         <div class="role"><span class="rot">Program Manager · MuleSoft, Salesforce & ERP</span></div>
         <p class="intro">PMP and CSM certified Program Manager with 10+ years of delivery, specialising in <strong>MuleSoft</strong>, <strong>Salesforce</strong> and <strong>ERP</strong> programmes. At NTT DATA I direct a USD 20M portfolio of 20+ projects for US and UK clients, from Salesforce Sales and Service Cloud rollouts to MuleSoft API-led integration with Oracle, SAP and Microsoft Dynamics. I'm known for turning troubled accounts around.</p>
@@ -750,71 +673,31 @@
           <a href="resume.pdf" class="btn ghost" download="Ramakrishnann_Sasikumar_Resume.pdf">Download résumé</a>
         </div>
       </div>
-
-      <div class="tile b-photo">
+      <aside class="profile">
         <div class="photo"><img src="images/me.jpg" alt="Ramakrishnann Sasikumar, Program Manager" fetchpriority="high" onerror="this.parentNode.classList.add('nophoto');this.remove()"><span>RS</span></div>
-        <div class="b-photo-cap"><b>Delivery Lead Consultant, NTT DATA</b><span>📍 Chennai, India</span></div>
-      </div>
-
-      <div class="card tile stat"><b>10+</b><span>Years in delivery</span></div>
-      <div class="card tile stat"><b>$20M</b><span>Portfolio managed</span></div>
-      <div class="card tile stat"><b>64+</b><span>Integrations as reusable APIs</span></div>
-
-      <a class="card tile b-latest" id="bentoLatest" href="#blogs"><div class="bl-body"><div class="b-label">✨ Latest post</div><h3>Read my latest post</h3><span class="go">Go to Blogs →</span></div></a>
-      <div class="card tile stat"><b>+70%</b><span>Flagship account margin, up from −30%</span></div>
-      <div class="card tile b-award">
-        <div class="trophy" aria-hidden="true">🏆</div>
-        <h3>India Delivery Excellence Award</h3>
-        <p>NTT DATA, FY25. Given to 65 of around 40,000 employees.</p>
-        <small>Also Best People Manager (Q4 2025) and Best Technical Paper (2025).</small>
-      </div>
-
-      <div class="tile b-ava ask-ava" id="askAva" hidden>
-        <div class="b-ava-top">
-          <span class="ava-av" data-ava></span>
-          <div><h3>Questions? Ask Ava</h3><p>My AI assistant answers from everything on this site, in seconds.</p></div>
-        </div>
-        <div class="ask-chips"></div>
-      </div>
-      <div class="card tile b-glance">
-        <div class="b-label">At a glance</div>
+        <h3>Delivery Lead Consultant, NTT DATA</h3>
+        <div class="loc">📍 Chennai, India</div>
         <ul>
           <li>USD 20M portfolio, 20+ projects</li>
           <li>40%+ gross margin across 7 industries</li>
           <li>50+ member onshore/offshore team</li>
-          <li>US &amp; UK clients</li>
+          <li>US & UK clients</li>
         </ul>
-      </div>
-      <a class="card tile b-services" href="#services">
-        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17"/><path d="M5 16l4.5-4.5 3.5 3 6.5-7"/><path d="M15 7.5h4v4"/></svg></div>
-        <h3>Work with me</h3>
-        <p>Programme delivery, project recovery, MuleSoft &amp; Salesforce, and AI builds.</p>
-        <span class="go">See services →</span>
-      </a>
+      </aside>
+    </div>
 
-      <div class="card tile b-now">
-        <div class="b-label"><span class="now-dot" aria-hidden="true"></span>Currently</div>
-        <ul>
-          <li>Directing a USD 20M portfolio at NTT DATA</li>
-          <li>Building <a href="#blogs/guru-ai-tutor" data-post="guru-ai-tutor">AI tutors</a> and agents with Claude</li>
-          <li>Counting the days to GTA 6</li>
-        </ul>
-      </div>
-      <div class="card tile b-certs">
-        <div class="b-label">Certified</div>
-        <div class="chips"><span class="chip">PMP</span><span class="chip">CSM</span><span class="chip">Salesforce Platform Admin</span><span class="chip">MuleSoft Integration Associate</span></div>
-      </div>
-      <a class="card tile b-open" href="#contact" data-reason="Job opportunity">
-        <div class="b-label">Open to</div>
-        <p><b>Delivery Head</b> roles in India</p>
-        <p><b>AI PM / Senior PM</b> roles worldwide</p>
-        <span class="go">Let's talk →</span>
-      </a>
+    <div class="now-strip"><span class="now-dot" aria-hidden="true"></span><b>Currently</b><span class="ni">Directing a USD 20M portfolio at NTT DATA</span><span class="ni">Building <a href="#blogs/guru-ai-tutor" data-post="guru-ai-tutor">AI tutors</a> and agents with Claude</span><span class="ni">Counting the days to GTA 6</span></div>
 
-      <div class="tile b-platforms logo-strip">
-        <span class="ls-label">Platforms<br>I deliver on</span>
-        <div class="marquee"><div class="track"><span>MuleSoft</span><span>Salesforce Sales Cloud</span><span>Salesforce Service Cloud</span><span>SAP</span><span>Oracle Cloud</span><span>Microsoft Dynamics 365</span><span>Business Central</span><span>Acumatica</span><span>AWS</span><span>Azure</span><span>Jira</span><span>Claude</span></div></div>
-      </div>
+    <div class="logo-strip">
+      <span class="ls-label">Platforms<br>I deliver on</span>
+      <div class="marquee"><div class="track"><span>MuleSoft</span><span>Salesforce Sales Cloud</span><span>Salesforce Service Cloud</span><span>SAP</span><span>Oracle Cloud</span><span>Microsoft Dynamics 365</span><span>Business Central</span><span>Acumatica</span><span>AWS</span><span>Azure</span><span>Jira</span><span>Claude</span></div></div>
+    </div>
+
+    <div class="stats">
+      <div class="card stat"><b>10+</b><span>Years in delivery</span></div>
+      <div class="card stat"><b>$20M</b><span>Portfolio managed</span></div>
+      <div class="card stat"><b>64+</b><span>Integrations as reusable APIs</span></div>
+      <div class="card stat"><b>+70%</b><span>Flagship account margin, up from −30%</span></div>
     </div>
 
     <h2 class="sub">What I do</h2>
@@ -822,6 +705,25 @@
       <div class="card highlight"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5h17"/><path d="M5 16l4.5-4.5 3.5 3 6.5-7"/><path d="M15 7.5h4v4"/></svg></div><h3>Programme & Portfolio Delivery</h3><p>P&L ownership, budgeting and forecasting, earned value tracking, and monthly steering committees with C-level stakeholders.</p></div>
       <div class="card highlight"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/><path d="M7.8 10.9l8.4-4.2"/><path d="M7.8 13.1l8.4 4.2"/></svg></div><h3>Digital Transformation</h3><p><strong>MuleSoft</strong> API-led connectivity across <strong>Salesforce</strong>, Oracle Cloud, Microsoft Dynamics and Business Central, on AWS and Azure.</p></div>
       <div class="card highlight"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3.5l1.6 4.4 4.4 1.6-4.4 1.6L10 15.5l-1.6-4.4L4 9.5l4.4-1.6z"/><path d="M17.5 14l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></div><h3>AI-Assisted Delivery</h3><p>Built an AI-assisted Agile method that cut person-hours per sprint by around 45%, and drive Generative AI adoption across delivery teams.</p></div>
+    </div>
+
+    <p class="more-link"><a href="#services">See how I can help on the Services page →</a></p>
+
+    <div class="award-banner">
+      <div class="trophy">🏆</div>
+      <div>
+        <h3>India Delivery Excellence Award, NTT DATA (FY25)</h3>
+        <p>Given to 65 of around 40,000 employees. Also named Best People Manager (Q4 2025) and winner of Best Technical Paper (2025).</p>
+      </div>
+    </div>
+
+    <div class="card ask-ava" id="askAva" hidden>
+      <span class="ava-av" data-ava></span>
+      <div>
+        <h3>Questions? Ask Ava</h3>
+        <p>My AI assistant answers from everything on this site, in seconds.</p>
+        <div class="ask-chips"></div>
+      </div>
     </div>
   </section>
 
@@ -2079,7 +1981,7 @@ document.addEventListener("click", e => {
 
 // --- V2.0: home headline, platform marquee, expandable timeline, contact reason, search items ---
 (function rotator() {
-  const el = $("#home .rot");
+  const el = $(".hero .rot");
   if (!el || ROLE_WORDS.length < 2) return;
   const caret = document.createElement("span"); caret.className = "caret"; caret.setAttribute("aria-hidden", "true"); el.after(caret);
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -2107,23 +2009,7 @@ $$(".tl-item ul").forEach(ul => {
   b.onclick = () => { ul.classList.toggle("clip"); label(); window.dispatchEvent(new Event("pagechange")); };
   ul.after(b);
 });
-$$(".highlight, .hobby, .svc, .stat, .engage .card, .contact-item, .b-latest, .b-award, .b-glance, .b-services, .b-now, .b-certs, .b-open").forEach(el => el.classList.add("tilt"));
-// Bento: the "Latest post" tile always shows the newest post (with its demo video, if it has one)
-(function bentoLatest() {
-  const el = $("#bentoLatest");
-  if (!el || !BLOGS.length) return;
-  const b = [...BLOGS].sort((x, y) => y.start.localeCompare(x.start))[0];
-  const vid = (b.body || []).find(x => x && x.video);
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const media = vid && !still
-    ? `<video src="${esc(vid.video)}" poster="${esc(vid.poster || b.image || "")}" muted loop playsinline preload="none" aria-hidden="true"></video><span class="bl-play">▶ Demo</span>`
-    : b.image ? `<img src="${esc(b.image)}" alt="" loading="lazy" decoding="async">` : `<div class="cover-ph">${b.icon || "📝"}</div>`;
-  el.href = postHref(b.slug);
-  el.setAttribute("aria-label", "Latest post: " + b.title);
-  el.innerHTML = `<div class="bl-media">${media}</div><div class="bl-body"><div class="b-label">✨ Latest post</div><h3>${esc(b.title)}</h3><div class="bl-meta">${esc(b.category)} · ${readMins(b)} min read</div><span class="go">Read the story →</span></div>`;
-  const v = $("video", el);
-  if (v && "IntersectionObserver" in window) new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.4 }).observe(v);
-})();
+$$(".highlight, .hobby, .svc, .stat, .engage .card, .contact-item").forEach(el => el.classList.add("tilt"));
 document.addEventListener("click", e => {
   const a = e.target.closest("[data-reason]");
   if (a) setTimeout(() => { const s = $("#reason"); if (s) s.value = a.dataset.reason; }, 0);

@@ -43,7 +43,7 @@ Each version is a git tag, so any of them can be restored.
 | Version | Name | What it is | Tag |
 |---|---|---|---|
 | V1 | Standard | The original blue and white site: Home, About, Blogs, Gallery, Contact, Ava, blog posts | `v1.0` |
-| V2 | Modern touches | Floating nav, Ctrl+K search, scroll animations, counting stats, card tilt, featured blog post, reading time, Services page | `v2.0` |
-| V3 | Bento grid | V2 plus the Home page rebuilt as a bento grid of tiles (current) | `v3.0` |
+| V2 | Modern touches | Floating nav, Ctrl+K search, scroll animations, counting stats, card tilt, featured blog post, reading time, Services page (**current, live**) | `v2.0` |
+| V3 | Bento grid | V2 plus the Home page rebuilt as a bento grid of tiles (not live; commit `6250305`) | `v3.0` |
 
 To look at an older version: `git checkout v2.0`. To bring one back on the live site, restore `index.html` from that tag and push.
