@@ -363,6 +363,11 @@
   .article ol.steps { padding-left: 0; list-style: none; counter-reset: st; }
   .article ol.steps li { counter-increment: st; position: relative; padding: 12px 16px 12px 56px; margin-bottom: 10px; background: var(--surface-2); border-radius: 10px; }
   .article ol.steps li::before { content: counter(st); position: absolute; left: 14px; top: 12px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
+  .article figure.vid { margin: 22px 0; }
+  .article figure.vid video, .article .yt { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; border: 1px solid var(--border); background: #000; }
+  .article .yt { position: relative; overflow: hidden; }
+  .article .yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .article figure.vid figcaption { margin-top: 8px; font-size: .85rem; color: var(--muted); }
   .article blockquote { margin: 20px 0; padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; font-size: 1.08rem; font-style: italic; color: var(--accent-2); }
   .article .outcome { background: var(--accent-soft); border-left: 4px solid var(--accent); padding: 16px 20px; border-radius: 8px; font-weight: 500; }
   .share { margin-top: 36px; padding: 20px 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
@@ -809,11 +814,61 @@ const CATEGORIES = ["Career", "AI & Agents", "Life", "Travel"];
 //  1) Project story (used for Career): challenge, actions[], outcome, tech[], result.
 //  Card image: add  image: "images/your-photo.jpg"  to any post. Without it, a blue cover with "icon" is shown.
 //  2) Simple post (good for Life / Travel): "body" is a list of paragraphs. Inside body you can also use
-//     { h: "Heading" }, { list: ["a", "b"] }, { steps: ["first", "second"] } and { quote: "..." }. Example:
+//     { h: "Heading" }, { list: ["a", "b"] }, { steps: ["first", "second"] } and { quote: "..." }.
+//     Videos: { video: "videos/clip.mp4", poster: "images/frame.jpg", caption: "..." } for a short MP4 in the
+//     videos folder, or { youtube: "VIDEO_ID", caption: "..." } for a YouTube video. Example:
 //     { slug: "first-trip-to-dubai", title: "My first trip to Dubai", category: "Travel", period: "Mar 2026", start: "2026-03",
 //       tag: "Dubai", summary: "One-line teaser shown on the card.",
 //       body: ["First paragraph...", "Second paragraph..."] },
 const BLOGS = [
+  {
+    slug: "guru-ai-tutor",
+    title: "Who said software is hard to build? Meet Guru, the AI tutor I built for my cousin",
+    client: "Personal project · Built for family",
+    period: "Nov 2026", start: "2026-11-17", category: "AI & Agents", tag: "AI tutor", icon: "🎓",
+    image: "images/blog-guru.jpg", credit: "Screenshot from Guru",
+    tech: ["Claude Sonnet 5.5", "Tamil + English", "Voice", "Quizzes", "Personalised re-teaching"],
+    summary: "My aunt asked me to help my cousin with her Class 12 Computer Science. With no time to spare, I built Guru: an AI tutor that teaches the whole textbook in Tamil or English, quizzes her, and re-teaches what she gets wrong.",
+    result: "A personal AI tutor for the full Class 12 syllabus, built in a couple of hours",
+    body: [
+      "Who said software is hard to build?",
+      "My aunt asked me for a favour: could I sit with her daughter, who's in Class 12, and explain her Computer Science syllabus? I wanted to help, but with my swamped routine, regular tutoring sessions just weren't realistic.",
+      "So I did the next best thing. I built her a tutor that's available whenever she is.",
+      { video: "videos/guru-demo.mp4", poster: "images/blog-guru.jpg", caption: "Guru in action: a lesson in English, the same lesson in Tamil, a chapter quiz, instant results, and a mistake re-taught a new way." },
+      { h: "Meet Guru" },
+      "Guru (குரு, \"teacher\") is a Class 12 Computer Science tutor for the Tamil Nadu State Board syllabus. It's preloaded with the entire textbook, and it uses Claude Sonnet 5.5 to teach it the way a patient tutor would.",
+      { list: [
+        "It teaches chapter by chapter, one page at a time, so nothing is skipped or rushed.",
+        "It explains in English or Tamil, and she can switch at any moment.",
+        "It reads lessons aloud with Tamil and English voices, and she can answer by typing or simply speaking.",
+        "She can ask it to repeat a page, explain it again differently, or show an example.",
+        "At the end of each chapter it sets a quiz on the key topics, and shows instantly what she got right and why.",
+        "It re-teaches anything she got wrong in a new way, and tracks her progress so she always knows where she stands."
+      ] },
+      { h: "Why Tamil mattered" },
+      "My cousin studies in Tamil medium, but computer science is full of English terms. A word-for-word translation would have made the concepts harder, not easier.",
+      "This is where Claude Sonnet 5.5 made the difference. Instead of translating literally, Guru explains each concept in natural Tamil wording, and keeps the English technical term alongside it, like செயற்கூறு (Function). She learns the idea in the language she thinks in, and the vocabulary she'll see in her exams.",
+      { h: "A study session with Guru" },
+      { steps: [
+        "Guru teaches the chapter one page at a time in English, with the key points on the board.",
+        "With one switch, the same lesson appears in Tamil, worded naturally rather than translated.",
+        "At the end of the chapter comes a quiz on the key topics, answered by typing or speaking.",
+        "Results arrive instantly: her score, every question, her answer, and why it was right or wrong.",
+        "Guru picks the topics she missed and teaches them again in a new way. In the demo, a function becomes \"a recipe card\": the ingredients are the parameters, and the formula gives the answer."
+      ] },
+      "That last step is my favourite. A textbook explains a concept once. A good teacher notices what you didn't understand and finds another way in. Guru does the same.",
+      { h: "Built in a couple of hours" },
+      "The whole thing took a couple of hours. Not because I wrote code quickly, but because I spent my time on what a good tutor should do: teach in small steps, check understanding, and go back over mistakes. Claude did the heavy lifting.",
+      { h: "What it taught me" },
+      { list: [
+        "Some of the most valuable software is built for an audience of one.",
+        "Language shouldn't be a barrier to learning. AI can meet students in the language they think in.",
+        "The best tutors don't just explain; they notice gaps and re-teach. That's a design choice, not a model feature.",
+        "Small, everyday problems are perfect places to start building with AI."
+      ] },
+      "My cousin now has a tutor who's always patient, always available and speaks her language. And I could still help her, even with a full calendar."
+    ]
+  },
   {
     slug: "shadow-hunter-game",
     title: "Shadow Hunter: I built a 100-level stealth game and Android app by describing it",
@@ -1400,6 +1455,11 @@ function renderBlock(x) {
   if (x.list) return `<ul>${x.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
   if (x.steps) return `<ol class="steps">${x.steps.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`;
   if (x.quote) return `<blockquote>${esc(x.quote)}</blockquote>`;
+  if (x.video || x.youtube) {
+    const cap = x.caption ? `<figcaption>${esc(x.caption)}</figcaption>` : "";
+    if (x.youtube) return `<figure class="vid"><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(x.youtube)}" title="${esc(x.caption || "Video")}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>${cap}</figure>`;
+    return `<figure class="vid"><video src="${esc(x.video)}"${x.poster ? ` poster="${esc(x.poster)}"` : ""} controls playsinline preload="metadata"></video>${cap}</figure>`;
+  }
   return "";
 }
 function renderArticle(b) {
@@ -1409,7 +1469,7 @@ function renderArticle(b) {
   const hue = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 }[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
   const cover = b.image
-    ? `<img class="hero-img" src="${esc(b.image)}" alt="${esc(b.title)}" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
+    ? `<img class="hero-img" src="${esc(b.image)}" alt="${esc(b.title)}" onerror="this.outerHTML=this.nextElementSibling.innerHTML"><template>${ph}</template>${b.credit ? `<div class="credit">${/^(illustration|screenshot)/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
     : ph;
   const story = b.challenge ? `
     <h2>The challenge</h2><p>${esc(b.challenge)}</p>

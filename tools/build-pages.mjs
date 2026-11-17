@@ -18,7 +18,7 @@ import { buildKnowledge } from "./build-knowledge.mjs";
 const SITE_URL = "https://rksasikumar.com";
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const OUT = path.resolve(ROOT, process.argv[2] || "_site");
-const COPY = ["index.html", "resume.pdf", "CNAME", "favicon.ico", "images"];
+const COPY = ["index.html", "resume.pdf", "CNAME", "favicon.ico", "images", "videos"];
 
 const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
 
@@ -63,6 +63,11 @@ const block = x => {
   if (x.list) return `<ul>${x.list.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
   if (x.steps) return `<ol class="steps">${x.steps.map(i => `<li>${esc(i)}</li>`).join("")}</ol>`;
   if (x.quote) return `<blockquote>${esc(x.quote)}</blockquote>`;
+  if (x.video || x.youtube) {
+    const cap = x.caption ? `<figcaption>${esc(x.caption)}</figcaption>` : "";
+    if (x.youtube) return `<figure class="vid"><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(x.youtube)}" title="${esc(x.caption || "Video")}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>${cap}</figure>`;
+    return `<figure class="vid"><video src="../${esc(x.video)}"${x.poster ? ` poster="../${esc(x.poster)}"` : ""} controls playsinline preload="metadata"></video>${cap}</figure>`;
+  }
   return "";
 };
 const HUE = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 };
@@ -86,7 +91,7 @@ function postPage(b, newer, older) {
   const hue = HUE[b.category] ?? 221;
   const ph = `<div class="hero-ph" style="background:linear-gradient(135deg,hsl(${hue} 80% 55%),hsl(${hue + 10} 85% 25%))">${b.icon || "📝"}</div>`;
   const cover = b.image
-    ? `<img class="hero-img" src="../${esc(b.image)}" alt="${esc(b.title)}" fetchpriority="high">${b.credit ? `<div class="credit">${/^illustration/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
+    ? `<img class="hero-img" src="../${esc(b.image)}" alt="${esc(b.title)}" fetchpriority="high">${b.credit ? `<div class="credit">${/^(illustration|screenshot)/i.test(b.credit) ? "" : "Photo: "}${esc(b.credit)}</div>` : ""}`
     : ph;
   const story = b.challenge
     ? `<h2>The challenge</h2><p>${esc(b.challenge)}</p>
