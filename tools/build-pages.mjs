@@ -38,7 +38,7 @@ const metaStart = html.indexOf("const PAGE_META = {");
 const metaEnd = html.indexOf("\n};", metaStart);
 if (metaStart < 0 || metaEnd < 0) throw new Error("Could not find PAGE_META in index.html");
 const PAGE_META = vm.runInNewContext("(" + html.slice(metaStart + "const PAGE_META = ".length, metaEnd + 2) + ")");
-const SECTIONS = ["about", "blogs", "gallery", "contact"];
+const SECTIONS = ["about", "services", "blogs", "gallery", "contact"];
 for (const s of SECTIONS) if (!PAGE_META[s]) throw new Error("PAGE_META is missing " + s);
 
 // ---------- pieces reused from index.html ----------
@@ -49,7 +49,7 @@ const siteName = pick(/<title>[^<]*<\/title>/, "<title>").replace(/<\/?title>/g,
 // Section links (#home, #about, ...) become clean addresses (/, /about/, ...)
 const cleanLinks = s => s
   .replace(/href="#home"/g, 'href="/"')
-  .replace(/href="#(about|blogs|gallery|contact)"/g, 'href="/$1/"')
+  .replace(/href="#(about|services|blogs|gallery|contact)"/g, 'href="/$1/"')
   .replace(/href="resume\.pdf"/g, 'href="/resume.pdf"');
 const header = cleanLinks(pick(/<header class="nav"[^>]*>[\s\S]*?<\/header>/, "header"))
   .replace('data-page="blogs"', 'data-page="blogs" class="active"');
@@ -70,6 +70,24 @@ const block = x => {
   }
   return "";
 };
+const shared = pick(/<script id="v2-shared">[\s\S]*?<\/script>/, "the shared V2 script");
+// Estimated reading time in minutes (same as readMins in index.html)
+function readMins(b) {
+  const parts = [b.summary, b.challenge, b.outcome, ...(b.actions || [])];
+  (b.body || []).forEach(x => typeof x === "string" ? parts.push(x) : parts.push(x.h, x.quote, x.caption, ...(x.list || []), ...(x.steps || [])));
+  return Math.max(1, Math.round(parts.filter(Boolean).join(" ").split(/\s+/).length / 220));
+}
+// Ctrl+K search items on blog pages
+const cmdkItems = [
+  ...[["/", "Home", "🏠"], ["/about/", "About Me", "👤"], ["/services/", "Services", "🧭"], ["/blogs/", "Blogs", "📝"], ["/gallery/", "Gallery", "🖼️"], ["/contact/", "Contact", "✉️"]]
+    .map(([href, label, icon]) => ({ group: "Pages", label, icon, href, keywords: label === "Services" ? "work with me hire consulting" : "" })),
+  { group: "Actions", label: "Download résumé (PDF)", icon: "📄", href: "/resume.pdf", download: "Ramakrishnann_Sasikumar_Resume.pdf", keywords: "resume cv" },
+  { group: "Actions", label: "Email me", hint: "rk@rksasikumar.com", icon: "📧", href: "mailto:rk@rksasikumar.com" },
+  { group: "Actions", label: "Chat on WhatsApp", icon: "💚", href: "https://wa.me/919600474973", ext: true },
+  { group: "Actions", label: "LinkedIn profile", icon: "💼", href: "https://www.linkedin.com/in/ramakrishnann-sasikumar-1301ab240", ext: true },
+  { group: "Actions", label: "Toggle dark mode", icon: "🌓", action: "theme", keywords: "theme light night" },
+  ...posts.map(p => ({ group: "Blog posts", label: p.title, hint: `${p.category} · ${p.period}`, icon: p.icon || "📝", href: `/blog/${p.slug}.html`, keywords: [p.tag, ...(p.tech || [])].join(" ") })),
+];
 const HUE = { "Career": 221, "AI & Agents": 250, "Life": 200, "Travel": 190 };
 
 // Up to three related posts: same category first, then shared technologies
@@ -81,7 +99,7 @@ function relatedHtml(b) {
   })).filter(x => x.score > 0).sort((x, y) => y.score - x.score || y.p.start.localeCompare(x.p.start)).slice(0, 3);
   if (!scored.length) return "";
   return `<section class="related"><h2>Related posts</h2><div class="related-list">${scored.map(({ p }) =>
-    `<a class="card related-item" href="${p.slug}.html">${p.image ? `<img src="../${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" decoding="async">` : ""}<span><small>${esc(p.category)} · ${esc(p.period)}</small>${esc(p.title)}</span></a>`).join("")}</div></section>`;
+    `<a class="card related-item tilt" href="${p.slug}.html">${p.image ? `<img src="../${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" decoding="async">` : ""}<span><small>${esc(p.category)} · ${esc(p.period)}</small>${esc(p.title)}</span></a>`).join("")}</div></section>`;
 }
 
 function postPage(b, newer, older) {
@@ -148,7 +166,7 @@ ${header}
   <section class="page active" id="post"><article class="article">
     <a class="back-link" href="/blogs/">← All blogs</a>
     ${cover}
-    <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""}</div>
+    <div class="pm-meta">${esc(b.period)} · ${esc(b.category)}${b.tag ? " · " + esc(b.tag) : ""} · ${readMins(b)} min read</div>
     <h1>${esc(b.title)}</h1>
     ${b.client ? `<div class="pm-client">${esc(b.client)}</div>` : ""}
     ${b.result ? `<div class="lead-result">📊 ${esc(b.result)}</div>` : ""}
@@ -193,7 +211,9 @@ ${footer}
     else prompt("Copy this link:", url);
   };
 })();
+window.CMDK_ITEMS = ${JSON.stringify(cmdkItems).replace(/</g, "\\u003c")};
 </script>
+${shared}
 </body>
 </html>
 `;
@@ -219,7 +239,9 @@ function sectionPage(section) {
   const description = isHome ? homeDescription : PAGE_META[section].description;
   const url = isHome ? `${SITE_URL}/` : `${SITE_URL}/${section}/`;
   const image = `${SITE_URL}/images/social-card.jpg`;
+  const homeTitle = pick(/<title>[^<]*<\/title>/, "<title>").replace(/<\/?title>/g, "");
   const head = `<base href="/" />
+<meta name="home-title" content="${esc(homeTitle)}" />
 <link rel="canonical" href="${url}" />
 <meta property="og:type" content="${isHome ? "profile" : "website"}" />
 <meta property="og:site_name" content="${esc(siteName)}" />

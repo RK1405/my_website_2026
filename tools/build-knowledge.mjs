@@ -70,6 +70,7 @@ const knowledge = `# Website content: ${SITE_URL}
 ## Pages
 - Home: ${SITE_URL}/
 - About Me (experience, skills, certifications, awards, education, hobbies): ${SITE_URL}/about/
+- Services / Work with me (what Rama offers and how to engage): ${SITE_URL}/services/
 - Blogs (case studies and AI posts): ${SITE_URL}/blogs/
 - Gallery (award photos and certificates): ${SITE_URL}/gallery/
 - Contact: ${SITE_URL}/contact/
@@ -84,6 +85,9 @@ ${sectionText("home")}
 
 ## About Me page
 ${sectionText("about")}
+
+## Services page (Work with me)
+${sectionText("services")}
 
 ## Contact page
 ${sectionText("contact")}
